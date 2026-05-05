@@ -6,7 +6,7 @@ A lightweight browser-based Souls-like game where you play as a capybara fightin
 
 ## 🎮 Play Now
 
-👉 https://ShivankXD.github.io/capysouls/
+👉 https://shivankxd.github.io/CapySouls/
 
 (No installation required — runs directly in your browser)
 
