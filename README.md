@@ -1,6 +1,8 @@
 # 🐹⚔️ CapySouls — The Rodent of Despair
 
 A lightweight browser-based Souls-like game where you play as a capybara fighting for survival.
+<img width="1086" height="1448" alt="capy-souls_cover" src="https://github.com/user-attachments/assets/123852cf-c18a-4556-ad2b-e15b4f340031" />
+
 
 ## 🎮 Play Now
 
