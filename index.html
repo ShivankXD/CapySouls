@@ -21,17 +21,37 @@ body{background:#080604;display:flex;flex-direction:column;align-items:center;ju
 #fs-btn-title{position:fixed;top:18px;right:22px;background:transparent;border:1px solid #3a2a1466;color:#6a5030;font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:2px;padding:6px 14px;cursor:pointer;transition:all .25s;z-index:300;}
 #fs-btn-title:hover{color:#dfc080;border-color:#c9a96e66;}
 
-/* ── PAUSE ── */
-#pause-btn{position:fixed;top:12px;left:50%;transform:translateX(-50%);font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:3px;color:#5a4828;background:transparent;border:1px solid #2a1f1055;padding:5px 16px;cursor:pointer;transition:all .2s;z-index:15;}
+
+/* ── TOP-RIGHT BUTTON CLUSTER (PC) ── */
+#top-right-btns{position:fixed;top:12px;right:12px;display:flex;gap:8px;z-index:15;}
+#pause-btn{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:3px;color:#5a4828;background:transparent;border:1px solid #2a1f1055;padding:6px 16px;cursor:pointer;transition:all .2s;}
 #pause-btn:hover{color:#dfc080;border-color:#c9a96e55;}
-#fullscreen-btn{position:fixed;top:12px;right:12px;font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:2px;color:#5a4828;background:transparent;border:1px solid #2a1f1055;padding:5px 14px;cursor:pointer;transition:all .2s;z-index:15;}
+#fullscreen-btn{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:2px;color:#5a4828;background:transparent;border:1px solid #2a1f1055;padding:6px 14px;cursor:pointer;transition:all .2s;}
 #fullscreen-btn:hover{color:#dfc080;border-color:#c9a96e55;}
+#exit-btn{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:2px;color:#7a3020;background:transparent;border:1px solid #4a1f1055;padding:6px 14px;cursor:pointer;transition:all .2s;}
+#exit-btn:hover{color:#ff8866;border-color:#8b3a2a88;}
+
+/* ── PAUSE OVERLAY ── */
 #pause-overlay{position:fixed;inset:0;background:#00000099;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:55;opacity:0;pointer-events:none;transition:opacity .3s;}
 #pause-overlay.show{opacity:1;pointer-events:all;}
 #pause-overlay h2{font-family:'Cinzel',serif;font-size:2.5rem;letter-spacing:10px;color:#dfc080;text-shadow:0 0 40px #c9a96e88;}
 #pause-overlay .psub{font-style:italic;color:#8a6840;margin-top:10px;font-size:.85rem;letter-spacing:2px;}
 #pause-overlay .presume{margin-top:28px;font-family:'Cinzel',serif;font-size:.8rem;letter-spacing:3px;color:#a08050;cursor:pointer;border:1px solid #3a2a1466;padding:10px 32px;transition:all .2s;}
 #pause-overlay .presume:hover{color:#dfc080;border-color:#c9a96e88;background:#c9a96e0a;}
+
+/* ── EXIT CONFIRM OVERLAY ── */
+#exit-overlay{position:fixed;inset:0;background:#000000bb;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:80;opacity:0;pointer-events:none;transition:opacity .3s;}
+#exit-overlay.show{opacity:1;pointer-events:all;}
+#exit-panel{background:#0c0906;border:1px solid #3a2a14;padding:36px 52px;text-align:center;box-shadow:0 0 80px #000000cc;}
+#exit-panel .ep-title{font-family:'Cinzel',serif;font-size:1.1rem;letter-spacing:5px;color:#dfc080;margin-bottom:8px;}
+#exit-panel .ep-sub{font-style:italic;color:#6a5030;font-size:.78rem;letter-spacing:2px;margin-bottom:28px;}
+#exit-panel .ep-btns{display:flex;gap:20px;justify-content:center;}
+.ep-btn{font-family:'Cinzel',serif;font-size:.8rem;letter-spacing:4px;padding:11px 36px;cursor:pointer;background:transparent;transition:all .25s;}
+#ep-yes{border:1px solid #8b1a1a88;color:#c04030;}
+#ep-yes:hover{background:#8b1a1a22;border-color:#c04030;color:#ff8866;}
+#ep-no{border:1px solid #c9a96e44;color:#c9a96e;}
+#ep-no:hover{background:#c9a96e14;border-color:#c9a96eaa;}
+
 
 html,body{width:100%;height:100%;overflow:hidden;}
 body{background:#080604;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;font-family:'IM Fell English',serif;color:#c9a96e;overflow:hidden;user-select:none;-webkit-user-select:none;touch-action:none;}
@@ -48,8 +68,8 @@ canvas{display:block;image-rendering:pixelated;border:1px solid #1a1208;box-shad
 .bar-fill{height:100%;transition:width .1s;}
 #hp-fill{background:linear-gradient(90deg,#8b1a1a,#c0392b);}
 #st-fill{background:linear-gradient(90deg,#1a5c2a,#27ae60);}
-#token-disp{position:fixed;top:10px;right:14px;font-family:'Cinzel',serif;font-size:.78rem;letter-spacing:2px;color:#f5d050;text-shadow:0 0 12px #f0c04099;z-index:10;}
-#level-disp{position:fixed;top:30px;right:14px;font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:2px;color:#aa9060;z-index:10;}
+#token-disp{position:fixed;top:10px;right:220px;font-family:'Cinzel',serif;font-size:.78rem;letter-spacing:2px;color:#f5d050;text-shadow:0 0 12px #f0c04099;z-index:10;}
+#level-disp{position:fixed;top:30px;right:220px;font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:2px;color:#aa9060;z-index:10;}
 #weapon-disp{position:fixed;bottom:14px;left:14px;font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:1px;color:#c0a870;pointer-events:none;z-index:10;}
 #armor-disp{position:fixed;bottom:28px;left:14px;font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:1px;color:#80a0c0;pointer-events:none;z-index:10;}
 
@@ -57,17 +77,18 @@ canvas{display:block;image-rendering:pixelated;border:1px solid #1a1208;box-shad
 #message-box{position:fixed;bottom:70px;left:50%;transform:translateX(-50%);font-family:'Cinzel',serif;font-size:1rem;letter-spacing:3px;color:#c9a96e;text-shadow:0 0 20px #c9a96e88,0 2px 6px #000;pointer-events:none;opacity:0;transition:opacity .5s;white-space:nowrap;text-align:center;z-index:30;}
 
 /* ── OVERLAYS ── */
-.overlay{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none;opacity:0;transition:opacity 1.2s;z-index:50;}
+.overlay{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none;opacity:0;transition:opacity 1.2s;z-index:50;padding:20px;box-sizing:border-box;}
 .overlay.show{opacity:1;pointer-events:all;}
-.overlay h2{font-family:'Cinzel',serif;font-size:3rem;letter-spacing:10px;text-shadow:0 0 40px currentColor;}
-.overlay .sub2{margin-top:10px;font-size:.9rem;font-style:italic;letter-spacing:2px;opacity:.7;}
-.overlay .retry{margin-top:22px;font-size:.8rem;letter-spacing:3px;cursor:pointer;opacity:.6;}
+.overlay h2{font-family:'Cinzel',serif;font-size:clamp(1.4rem,5vw,3rem);letter-spacing:clamp(3px,2vw,10px);text-shadow:0 0 40px currentColor;text-align:center;}
+.overlay .sub2{margin-top:10px;font-size:clamp(.7rem,2.5vw,.9rem);font-style:italic;letter-spacing:2px;opacity:.7;text-align:center;}
+.overlay .retry{margin-top:22px;font-size:clamp(.65rem,2vw,.8rem);letter-spacing:2px;cursor:pointer;opacity:.6;text-align:center;padding:8px 16px;}
 .overlay .retry:hover{opacity:1;color:#c9a96e;}
 #you-died h2{color:#8b1a1a;}
 #you-died .retry{color:#7a4040;}
 #level-clear h2{color:#c9a96e;}
-#game-clear h2{color:#f0c040;font-size:2.2rem;}
+#game-clear h2{color:#f0c040;font-size:clamp(1.2rem,4vw,2.2rem);}
 #game-clear .sub2{color:#c9a06e;}
+.lc-buttons{display:flex;flex-wrap:wrap;gap:16px;margin-top:24px;justify-content:center;}
 
 /* ── SHOP ── */
 #shop-screen{position:fixed;inset:0;background:#06040200;backdrop-filter:blur(2px);display:none;align-items:center;justify-content:center;z-index:150;}
@@ -129,6 +150,8 @@ canvas{display:block;image-rendering:pixelated;border:1px solid #1a1208;box-shad
 #mobile-topbar{position:absolute;top:0;left:0;right:0;display:flex;justify-content:center;gap:20px;padding:10px;pointer-events:all;background:#00000033;}
 .mob-top-btn{background:transparent;border:1px solid #3a2a1866;color:#8a7050;font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:2px;padding:6px 18px;cursor:pointer;-webkit-tap-highlight-color:transparent;}
 .mob-top-btn:active{color:#dfc080;border-color:#c9a96e88;background:#c9a96e11;}
+.mob-exit-btn{color:#7a3020 !important;border-color:#5a1f1055 !important;}
+.mob-exit-btn:active{color:#ff8866 !important;border-color:#8b3a2a88 !important;}
 
 /* Landscape-specific mobile layout */
 @media (orientation:landscape) and (max-height:500px){
@@ -141,8 +164,8 @@ canvas{display:block;image-rendering:pixelated;border:1px solid #1a1208;box-shad
 
 /* ── LEVEL INTRO ── */
 #level-intro{background:#00000088;z-index:60;position:fixed;}
-.intro-roman{font-family:'Cinzel',serif;font-size:5rem;letter-spacing:12px;color:#c9a96e;text-shadow:0 0 60px #c9a96eaa,0 0 120px #c9a96e44;opacity:0;transform:scale(0.85);transition:all .6s ease;}
-.intro-name{font-family:'Cinzel',serif;font-size:1.5rem;letter-spacing:8px;color:#8a6a40;margin-top:14px;opacity:0;transition:all .6s ease .2s;}
+.intro-roman{font-family:'Cinzel',serif;font-size:clamp(2rem,10vw,5rem);letter-spacing:clamp(4px,3vw,12px);color:#c9a96e;text-shadow:0 0 60px #c9a96eaa,0 0 120px #c9a96e44;opacity:0;transform:scale(0.85);transition:all .6s ease;text-align:center;}
+.intro-name{font-family:'Cinzel',serif;font-size:clamp(.9rem,4vw,1.5rem);letter-spacing:clamp(3px,2vw,8px);color:#8a6a40;margin-top:14px;opacity:0;transition:all .6s ease .2s;text-align:center;}
 #level-intro.show .intro-roman,#level-intro.show .intro-name{opacity:1;transform:scale(1);}
 .lc-buttons{display:flex;gap:40px;margin-top:24px;}
 .retry-shop{color:#c9a06e!important;border:1px solid #c9a06e33;padding:4px 14px;}
@@ -187,8 +210,12 @@ canvas{display:block;image-rendering:pixelated;border:1px solid #1a1208;box-shad
     <div class="bar-row"><div class="bar-label">HP</div><div class="bar-bg"><div class="bar-fill" id="hp-fill" style="width:100%"></div></div></div>
     <div class="bar-row"><div class="bar-label">ST</div><div class="bar-bg"><div class="bar-fill" id="st-fill" style="width:100%"></div></div></div>
   </div>
-  <button id="pause-btn" onclick="togglePause()">❚❚ PAUSE</button>
-  <button id="fullscreen-btn" onclick="toggleFullscreen()">⛶ FS</button>
+  <!-- TOP RIGHT BUTTON CLUSTER -->
+  <div id="top-right-btns">
+    <button id="pause-btn" onclick="togglePause()">❚❚ PAUSE</button>
+    <button id="fullscreen-btn" onclick="toggleFullscreen()">⛶ FS</button>
+    <button id="exit-btn" onclick="showExitMenu()">✕ EXIT</button>
+  </div>
   <div id="token-disp">🪙 0</div>
   <div id="level-disp">REALM I</div>
   <div id="weapon-disp"></div>
@@ -222,6 +249,17 @@ canvas{display:block;image-rendering:pixelated;border:1px solid #1a1208;box-shad
     <div class="psub">— The capybara waits —</div>
     <div class="presume" onclick="togglePause()">▶ RESUME</div>
   </div>
+  <!-- EXIT CONFIRM OVERLAY -->
+  <div id="exit-overlay">
+    <div id="exit-panel">
+      <div class="ep-title">⚔ RETURN TO MAIN MENU?</div>
+      <div class="ep-sub">— All unsaved progress will be lost —</div>
+      <div class="ep-btns">
+        <button class="ep-btn" id="ep-yes" onclick="returnToMenu()">YES</button>
+        <button class="ep-btn" id="ep-no" onclick="hideExitMenu()">NO</button>
+      </div>
+    </div>
+  </div>
   <div class="controls-panel">WASD · MOVE &nbsp; J/Z · ATTACK &nbsp; K/X · ROLL &nbsp; ESC · PAUSE &nbsp; P · SHOP</div>
 
   <!-- MOBILE CONTROLS -->
@@ -230,6 +268,7 @@ canvas{display:block;image-rendering:pixelated;border:1px solid #1a1208;box-shad
       <button class="mob-top-btn" onclick="togglePause()">❚❚ PAUSE</button>
       <button class="mob-top-btn" onclick="openShop()">🛒 SHOP</button>
       <button class="mob-top-btn" onclick="toggleFullscreen()">⛶ FS</button>
+      <button class="mob-top-btn mob-exit-btn" onclick="showExitMenu()">✕ EXIT</button>
     </div>
     <div id="joystick-zone">
       <div id="joystick-base"></div>
@@ -483,7 +522,7 @@ function showLevelIntro(lvlIdx) {
 }
 
 function hideAllOverlays() {
-  ['you-died','level-clear','game-clear','level-intro'].forEach(id => {
+  ['you-died','level-clear','game-clear','level-intro','exit-overlay'].forEach(id => {
     const el = document.getElementById(id);
     el.classList.remove('show');
   });
@@ -959,6 +998,39 @@ function toggleFullscreen(){
   }
 }
 
+function showExitMenu(){
+  // Pause the game while exit menu is shown
+  if(!paused && gameState==='playing') togglePause();
+  document.getElementById('exit-overlay').classList.add('show');
+}
+
+function hideExitMenu(){
+  document.getElementById('exit-overlay').classList.remove('show');
+  // Resume if we paused just for the exit menu
+  if(paused && gameState==='playing') togglePause();
+}
+
+function returnToMenu(){
+  document.getElementById('exit-overlay').classList.remove('show');
+  // Reset everything
+  paused=false;
+  gameState='playing';
+  document.getElementById('pause-overlay').classList.remove('show');
+  document.getElementById('game-wrap').classList.remove('active');
+  document.getElementById('mobile-controls').classList.remove('active');
+  document.getElementById('top-right-btns').style.display='flex';
+  hideAllOverlays();
+  // Show title
+  document.getElementById('title-screen').style.display='flex';
+  document.getElementById('fs-btn-title').style.display='block';
+  // Reset weapon/armor owned state visually
+  WEAPONS.forEach((w,i)=>{if(i>0)w.owned=false;});
+  ARMORS.forEach((a,i)=>{if(i>0)a.owned=false;});
+  equippedWeapon=WEAPONS[0]; equippedArmor=ARMORS[0];
+  tokens=0; currentLevel=0;
+  updateTokenDisp();
+}
+
 function togglePause(){
   if(gameState!=='playing'&&!paused) return;
   paused=!paused;
@@ -1142,8 +1214,7 @@ function startGame(mode){
 
   if(isMobile){
     document.getElementById('mobile-controls').classList.add('active');
-    document.getElementById('pause-btn').style.display='none';
-    document.getElementById('fullscreen-btn').style.display='none';
+    document.getElementById('top-right-btns').style.display='none';
     initMobileControls();
     const el=document.documentElement;
     if(el.requestFullscreen) el.requestFullscreen();
