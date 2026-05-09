@@ -260,7 +260,7 @@ canvas{display:block;image-rendering:pixelated;border:1px solid #1a1208;box-shad
       </div>
     </div>
   </div>
-  <div class="controls-panel">WASD · MOVE &nbsp; J/Z · ATTACK &nbsp; K/X · ROLL &nbsp; ESC · PAUSE &nbsp; P · SHOP</div>
+  <div class="controls-panel" id="controls-panel">WASD · MOVE &nbsp; J/Z · ATTACK &nbsp; K/X · ROLL &nbsp; ESC · PAUSE &nbsp; P · SHOP</div>
 
   <!-- MOBILE CONTROLS -->
   <div id="mobile-controls">
@@ -1012,18 +1012,16 @@ function hideExitMenu(){
 
 function returnToMenu(){
   document.getElementById('exit-overlay').classList.remove('show');
-  // Reset everything
   paused=false;
   gameState='playing';
   document.getElementById('pause-overlay').classList.remove('show');
   document.getElementById('game-wrap').classList.remove('active');
   document.getElementById('mobile-controls').classList.remove('active');
   document.getElementById('top-right-btns').style.display='flex';
+  document.getElementById('controls-panel').style.display='';
   hideAllOverlays();
-  // Show title
   document.getElementById('title-screen').style.display='flex';
   document.getElementById('fs-btn-title').style.display='block';
-  // Reset weapon/armor owned state visually
   WEAPONS.forEach((w,i)=>{if(i>0)w.owned=false;});
   ARMORS.forEach((a,i)=>{if(i>0)a.owned=false;});
   equippedWeapon=WEAPONS[0]; equippedArmor=ARMORS[0];
@@ -1215,6 +1213,7 @@ function startGame(mode){
   if(isMobile){
     document.getElementById('mobile-controls').classList.add('active');
     document.getElementById('top-right-btns').style.display='none';
+    document.getElementById('controls-panel').style.display='none';
     initMobileControls();
     const el=document.documentElement;
     if(el.requestFullscreen) el.requestFullscreen();
