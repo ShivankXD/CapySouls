@@ -93,7 +93,38 @@ canvas{display:block;image-rendering:pixelated;border:1px solid #1a1208;box-shad
 .shop-upgrade-row .ug-label{font-family:'Cinzel',serif;font-size:.75rem;letter-spacing:2px;color:#c9a96e;}
 .shop-upgrade-row .ug-desc{font-size:.65rem;color:#6a5030;font-style:italic;margin-top:2px;}
 .shop-upgrade-row .ug-price{font-family:'Cinzel',serif;font-size:.75rem;color:#f0c040;}
-.controls-panel{position:absolute;bottom:10px;right:12px;font-size:.6rem;color:#6a5535;line-height:1.8;text-align:right;pointer-events:none;}
+.controls-panel{position:absolute;top:50%;right:0;transform:translateY(-50%);font-size:.58rem;color:#6a5535;line-height:2.4;text-align:center;pointer-events:none;writing-mode:vertical-rl;text-orientation:mixed;letter-spacing:2px;padding:0 6px;border-left:1px solid #2a1f1033;}
+
+/* ── DEVICE POPUP ── */
+#device-popup{position:fixed;inset:0;background:#00000099;backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:300;}
+#device-popup.show{display:flex;}
+#device-panel{background:#0c0906;border:1px solid #3a2a14;padding:40px 50px;text-align:center;box-shadow:0 0 80px #000000cc;}
+.dp-title{font-family:'Cinzel',serif;font-size:1.2rem;letter-spacing:6px;color:#dfc080;margin-bottom:6px;}
+.dp-sub{font-style:italic;color:#6a5030;font-size:.78rem;letter-spacing:2px;margin-bottom:32px;}
+.dp-buttons{display:flex;gap:24px;}
+.dp-btn{background:#0a0806;border:1px solid #2a1f12;padding:28px 36px;cursor:pointer;transition:all .25s;min-width:160px;}
+.dp-btn:hover{border-color:#c9a96e88;background:#14100a;box-shadow:0 0 24px #c9a96e22;}
+.dp-icon{font-size:2.8rem;margin-bottom:12px;}
+.dp-label{font-family:'Cinzel',serif;font-size:.8rem;letter-spacing:3px;color:#dfc080;margin-bottom:6px;}
+.dp-hint{font-size:.65rem;color:#6a5030;font-style:italic;}
+
+/* ── MOBILE CONTROLS ── */
+#mobile-controls{display:none;position:absolute;inset:0;pointer-events:none;z-index:20;}
+#mobile-controls.active{display:block;}
+/* Joystick */
+#joystick-zone{position:absolute;bottom:60px;left:40px;width:130px;height:130px;pointer-events:all;}
+#joystick-base{position:absolute;inset:0;border-radius:50%;background:#c9a96e0a;border:2px solid #c9a96e22;}
+#joystick-knob{position:absolute;width:52px;height:52px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#dfc08066,#c9a96e33);border:2px solid #c9a96e55;top:50%;left:50%;transform:translate(-50%,-50%);transition:none;}
+/* Action buttons */
+#action-btns{position:absolute;bottom:60px;right:30px;display:flex;flex-direction:column;gap:14px;align-items:flex-end;pointer-events:all;}
+.act-btn{width:64px;height:64px;border-radius:50%;border:2px solid;display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:1px;cursor:pointer;user-select:none;-webkit-user-select:none;transition:transform .1s;}
+.act-btn:active{transform:scale(.92);}
+#btn-attack{background:#8b1a1a22;border-color:#8b1a1a88;color:#ff8866;}
+#btn-roll{background:#1a3a8b22;border-color:#3a6aaa88;color:#88aaff;}
+/* Mobile top bar */
+#mobile-topbar{position:absolute;top:0;left:0;right:0;display:flex;justify-content:center;gap:20px;padding:10px;pointer-events:all;}
+.mob-top-btn{background:transparent;border:1px solid #2a1f1055;color:#6a5535;font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:2px;padding:5px 14px;cursor:pointer;}
+.mob-top-btn:hover,.mob-top-btn:active{color:#dfc080;border-color:#c9a96e55;}
 
 /* ── LEVEL INTRO ── */
 #level-intro{background:#00000088;z-index:60;}
@@ -112,12 +143,28 @@ canvas{display:block;image-rendering:pixelated;border:1px solid #1a1208;box-shad
 <div id="title-screen">
   <h1>CAPYSOULS</h1>
   <div class="sub">— The Rodent of Despair —</div>
-  <div class="hint">
-    WASD / Arrow Keys — Move &nbsp;·&nbsp; J / Z — Attack &nbsp;·&nbsp; K / X — Dodge Roll<br>
-    Defeat enemies, earn tokens, visit the shop between levels.<br>
-    Survive all 5 realms. The capybara endures.
+  <div class="hint">WASD / Arrow Keys — Move &nbsp;·&nbsp; J / Z — Attack &nbsp;·&nbsp; K / X — Dodge Roll</div>
+  <button class="big-btn" onclick="showDevicePopup()">BEGIN SUFFERING</button>
+</div>
+
+<!-- DEVICE POPUP -->
+<div id="device-popup">
+  <div id="device-panel">
+    <div class="dp-title">CHOOSE YOUR SUFFERING</div>
+    <div class="dp-sub">— How shall the capybara endure? —</div>
+    <div class="dp-buttons">
+      <div class="dp-btn" onclick="startGame('pc')">
+        <div class="dp-icon">🖥️</div>
+        <div class="dp-label">SUFFER ON PC</div>
+        <div class="dp-hint">Keyboard controls</div>
+      </div>
+      <div class="dp-btn" onclick="startGame('mobile')">
+        <div class="dp-icon">📱</div>
+        <div class="dp-label">SUFFER ON PHONE</div>
+        <div class="dp-hint">Touch joystick controls</div>
+      </div>
+    </div>
   </div>
-  <button class="big-btn" onclick="startGame()">BEGIN SUFFERING</button>
 </div>
 
 <!-- GAME -->
@@ -162,7 +209,24 @@ canvas{display:block;image-rendering:pixelated;border:1px solid #1a1208;box-shad
     <div class="psub">— The capybara waits —</div>
     <div class="presume" onclick="togglePause()">▶ RESUME</div>
   </div>
-  <div class="controls-panel">WASD·Move &nbsp;|&nbsp; J/Z·Attack &nbsp;|&nbsp; K/X·Roll &nbsp;|&nbsp; ESC·Pause &nbsp;|&nbsp; P·Shop</div>
+  <div class="controls-panel">WASD · MOVE &nbsp; J/Z · ATTACK &nbsp; K/X · ROLL &nbsp; ESC · PAUSE &nbsp; P · SHOP</div>
+
+  <!-- MOBILE CONTROLS -->
+  <div id="mobile-controls">
+    <div id="mobile-topbar">
+      <button class="mob-top-btn" onclick="togglePause()">❚❚ PAUSE</button>
+      <button class="mob-top-btn" onclick="openShop()">🛒 SHOP</button>
+      <button class="mob-top-btn" onclick="toggleFullscreen()">⛶ FS</button>
+    </div>
+    <div id="joystick-zone">
+      <div id="joystick-base"></div>
+      <div id="joystick-knob"></div>
+    </div>
+    <div id="action-btns">
+      <div class="act-btn" id="btn-attack">⚔<br>ATK</div>
+      <div class="act-btn" id="btn-roll">↻<br>ROLL</div>
+    </div>
+  </div>
 </div>
 
 <!-- SHOP -->
@@ -197,7 +261,7 @@ canvas{display:block;image-rendering:pixelated;border:1px solid #1a1208;box-shad
 // ═══════════════════════════════════════════════════════════
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
-const W = canvas.width, H = canvas.height;
+const W = ()=>canvas.width, H = ()=>canvas.height;
 const WALL_T=58, WALL_B=58, WALL_S=48;
 
 // ─── WEAPONS ───────────────────────────────────────────────
@@ -321,13 +385,18 @@ let player, enemies=[];
 let levelConfig;
 let msgTimeoutId=null;
 let paused=false;
+let deviceMode='pc'; // 'pc' | 'mobile'
+
+// Mobile virtual input
+let mobileInput={mx:0,my:0,attack:false,roll:false};
+let joystickActive=false, joystickOrigin={x:0,y:0};
 
 // ═══════════════════════════════════════════════════════════
 //  PLAYER
 // ═══════════════════════════════════════════════════════════
 function makePlayer(preserve) {
   const base = {
-    x:160, y:H/2-14,
+    x:160, y:H()/2-14,
     w:32, h:28,
     vx:0, vy:0,
     speed:3.2,
@@ -564,8 +633,8 @@ function showMsg(text){
 //  COLLISION
 // ═══════════════════════════════════════════════════════════
 function clamp(obj){
-  obj.x=Math.max(WALL_S,Math.min(W-WALL_S-obj.w,obj.x));
-  obj.y=Math.max(WALL_T,Math.min(H-WALL_B-obj.h,obj.y));
+  obj.x=Math.max(WALL_S,Math.min(W()-WALL_S-obj.w,obj.x));
+  obj.y=Math.max(WALL_T,Math.min(H()-WALL_B-obj.h,obj.y));
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -579,16 +648,22 @@ function update(){
   // ── Player ──
   if(!player.dead){
     let mx=0,my=0;
-    if(isKey('a','arrowleft')) mx-=1;
-    if(isKey('d','arrowright')) mx+=1;
-    if(isKey('w','arrowup')) my-=1;
-    if(isKey('s','arrowdown')) my+=1;
-    if(mx) player.facing=mx;
+    if(deviceMode==='mobile'){
+      mx=mobileInput.mx; my=mobileInput.my;
+    } else {
+      if(isKey('a','arrowleft')) mx-=1;
+      if(isKey('d','arrowright')) mx+=1;
+      if(isKey('w','arrowup')) my-=1;
+      if(isKey('s','arrowdown')) my+=1;
+    }
+    if(mx) player.facing=mx>0?1:-1;
     if(mx||my) player.facingY=my;
     if(mx&&my){mx*=0.707;my*=0.707;}
 
-    if((keys['j']||keys['z'])&&!player.isAttacking) playerAttack();
-    if((keys['k']||keys['x'])&&!player.isRolling) playerRoll();
+    if(deviceMode==='pc'){
+      if((keys['j']||keys['z'])&&!player.isAttacking) playerAttack();
+      if((keys['k']||keys['x'])&&!player.isRolling) playerRoll();
+    }
 
     if(player.isRolling){
       player.vx=player.rollDir.x*player.rollSpeed;
@@ -668,35 +743,31 @@ function update(){
 // ═══════════════════════════════════════════════════════════
 function drawArena(){
   const lc=levelConfig;
+  const cW=W(), cH=H();
   const tileSize=50;
-  for(let tx=WALL_S;tx<W-WALL_S;tx+=tileSize){
-    for(let ty=WALL_T;ty<H-WALL_B;ty+=tileSize){
+  for(let tx=WALL_S;tx<cW-WALL_S;tx+=tileSize){
+    for(let ty=WALL_T;ty<cH-WALL_B;ty+=tileSize){
       ctx.fillStyle=((Math.floor(tx/tileSize)+Math.floor(ty/tileSize))%2===0)?lc.floorColors[0]:lc.floorColors[1];
       ctx.fillRect(tx,ty,tileSize,tileSize);
     }
   }
-  // Grid
   ctx.strokeStyle='#ffffff06';ctx.lineWidth=1;
-  for(let tx=WALL_S;tx<=W-WALL_S;tx+=tileSize){ctx.beginPath();ctx.moveTo(tx,WALL_T);ctx.lineTo(tx,H-WALL_B);ctx.stroke();}
-  for(let ty=WALL_T;ty<=H-WALL_B;ty+=tileSize){ctx.beginPath();ctx.moveTo(WALL_S,ty);ctx.lineTo(W-WALL_S,ty);ctx.stroke();}
-  // Fog overlay
-  if(lc.fog){ctx.fillStyle=lc.fog;ctx.fillRect(WALL_S,WALL_T,W-WALL_S*2,H-WALL_T-WALL_B);}
-  // Walls
+  for(let tx=WALL_S;tx<=cW-WALL_S;tx+=tileSize){ctx.beginPath();ctx.moveTo(tx,WALL_T);ctx.lineTo(tx,cH-WALL_B);ctx.stroke();}
+  for(let ty=WALL_T;ty<=cH-WALL_B;ty+=tileSize){ctx.beginPath();ctx.moveTo(WALL_S,ty);ctx.lineTo(cW-WALL_S,ty);ctx.stroke();}
+  if(lc.fog){ctx.fillStyle=lc.fog;ctx.fillRect(WALL_S,WALL_T,cW-WALL_S*2,cH-WALL_T-WALL_B);}
   ctx.fillStyle=lc.wallColor;
-  ctx.fillRect(0,0,W,WALL_T);ctx.fillRect(0,H-WALL_B,W,WALL_B);
-  ctx.fillRect(0,0,WALL_S,H);ctx.fillRect(W-WALL_S,0,WALL_S,H);
+  ctx.fillRect(0,0,cW,WALL_T);ctx.fillRect(0,cH-WALL_B,cW,WALL_B);
+  ctx.fillRect(0,0,WALL_S,cH);ctx.fillRect(cW-WALL_S,0,WALL_S,cH);
   ctx.fillStyle=lc.wallTop;
-  ctx.fillRect(WALL_S,WALL_T-8,W-WALL_S*2,4);ctx.fillRect(WALL_S,H-WALL_B+4,W-WALL_S*2,4);
-  ctx.fillRect(WALL_S-8,WALL_T,4,H-WALL_T-WALL_B);ctx.fillRect(W-WALL_S+4,WALL_T,4,H-WALL_T-WALL_B);
-  // Torches
+  ctx.fillRect(WALL_S,WALL_T-8,cW-WALL_S*2,4);ctx.fillRect(WALL_S,cH-WALL_B+4,cW-WALL_S*2,4);
+  ctx.fillRect(WALL_S-8,WALL_T,4,cH-WALL_T-WALL_B);ctx.fillRect(cW-WALL_S+4,WALL_T,4,cH-WALL_T-WALL_B);
   drawTorch(WALL_S+30,WALL_T+20,lc.torchColor);
-  drawTorch(W-WALL_S-30,WALL_T+20,lc.torchColor);
-  drawTorch(WALL_S+30,H-WALL_B-20,lc.torchColor);
-  drawTorch(W-WALL_S-30,H-WALL_B-20,lc.torchColor);
-  // Level name watermark
+  drawTorch(cW-WALL_S-30,WALL_T+20,lc.torchColor);
+  drawTorch(WALL_S+30,cH-WALL_B-20,lc.torchColor);
+  drawTorch(cW-WALL_S-30,cH-WALL_B-20,lc.torchColor);
   ctx.save();ctx.globalAlpha=0.06;ctx.fillStyle=lc.torchColor;
   ctx.font='bold 72px "Cinzel",serif';ctx.textAlign='center';
-  ctx.fillText(lc.name,W/2,H/2+25);ctx.restore();ctx.textAlign='left';
+  ctx.fillText(lc.name,cW/2,cH/2+25);ctx.restore();ctx.textAlign='left';
 }
 
 function drawTorch(x,y,color){
@@ -846,7 +917,7 @@ function drawParticles(){
 }
 
 function draw(){
-  ctx.clearRect(0,0,W,H);
+  ctx.clearRect(0,0,W(),H());
   ctx.save();
   if(shakeTimer>0){ctx.translate((Math.random()-.5)*shakeAmt,(Math.random()-.5)*shakeAmt);}
   drawArena();
@@ -861,7 +932,7 @@ function draw(){
   }
   if(player.stamina<20){
     ctx.globalAlpha=.12+Math.sin(frameCount*.2)*.08;ctx.fillStyle='#ffcc00';
-    ctx.fillRect(WALL_S,WALL_T,W-WALL_S*2,H-WALL_T-WALL_B);ctx.globalAlpha=1;
+    ctx.fillRect(WALL_S,WALL_T,W()-WALL_S*2,H()-WALL_T-WALL_B);ctx.globalAlpha=1;
   }
   ctx.restore();
 }
@@ -1018,10 +1089,41 @@ function renderUpgrades(){
 // ═══════════════════════════════════════════════════════════
 //  START / RESTART
 // ═══════════════════════════════════════════════════════════
-function startGame(){
+function showDevicePopup(){
+  document.getElementById('device-popup').classList.add('show');
+}
+
+function startGame(mode){
+  deviceMode = mode || 'pc';
+  document.getElementById('device-popup').classList.remove('show');
   document.getElementById('title-screen').style.display='none';
   document.getElementById('fs-btn-title').style.display='none';
+
+  // Responsive canvas sizing
+  const isMobile = deviceMode === 'mobile';
+  const vw = window.innerWidth, vh = window.innerHeight;
+  const targetW = isMobile ? vw : Math.floor(vw * 0.70);
+  const targetH = isMobile ? vh : Math.floor(vh * 0.70);
+  // Maintain 17:10 aspect ratio
+  const aspect = 17/10;
+  let cw, ch;
+  if (targetW / targetH > aspect) { ch = targetH; cw = Math.floor(ch * aspect); }
+  else { cw = targetW; ch = Math.floor(cw / aspect); }
+  canvas.width  = Math.max(cw, 600);
+  canvas.height = Math.max(ch, 350);
+  // Rewrite W/H used by game (they're const so use canvas directly)
+
   document.getElementById('game-wrap').style.display='block';
+  if(isMobile){
+    document.getElementById('mobile-controls').classList.add('active');
+    document.getElementById('pause-btn').style.display='none';
+    document.getElementById('fullscreen-btn').style.display='none';
+    initMobileControls();
+    // Request fullscreen on mobile
+    const el=document.documentElement;
+    el.requestFullscreen&&el.requestFullscreen();
+  }
+
   currentLevel=0;tokens=0;
   playerStats={maxHp:100,maxStamina:100,speed:3.2};
   WEAPONS.forEach((w,i)=>{if(i>0)w.owned=false;});
@@ -1036,6 +1138,67 @@ function startGame(){
 function restartLevel(){
   player.hp=player.maxHp;player.stamina=player.maxStamina;
   initLevel(currentLevel,true);
+}
+
+// ═══════════════════════════════════════════════════════════
+//  MOBILE CONTROLS
+// ═══════════════════════════════════════════════════════════
+function initMobileControls(){
+  const zone  = document.getElementById('joystick-zone');
+  const knob  = document.getElementById('joystick-knob');
+  const base  = document.getElementById('joystick-base');
+  const maxR  = 48;
+
+  function getJoyXY(touch){
+    const rect = zone.getBoundingClientRect();
+    const cx = rect.left + rect.width/2;
+    const cy = rect.top  + rect.height/2;
+    const dx = touch.clientX - cx;
+    const dy = touch.clientY - cy;
+    const dist = Math.hypot(dx,dy);
+    const clamped = Math.min(dist, maxR);
+    const angle = Math.atan2(dy,dx);
+    return {
+      nx: (clamped/maxR)*Math.cos(angle),
+      ny: (clamped/maxR)*Math.sin(angle),
+      px: Math.cos(angle)*clamped,
+      py: Math.sin(angle)*clamped,
+    };
+  }
+
+  zone.addEventListener('touchstart', e=>{
+    e.preventDefault();
+    joystickActive=true;
+    const t=e.touches[0];
+    const r=getJoyXY(t);
+    mobileInput.mx=r.nx; mobileInput.my=r.ny;
+    knob.style.transform=`translate(calc(-50% + ${r.px}px), calc(-50% + ${r.py}px))`;
+  },{passive:false});
+
+  zone.addEventListener('touchmove', e=>{
+    e.preventDefault();
+    if(!joystickActive) return;
+    const t=e.touches[0];
+    const r=getJoyXY(t);
+    mobileInput.mx=r.nx; mobileInput.my=r.ny;
+    knob.style.transform=`translate(calc(-50% + ${r.px}px), calc(-50% + ${r.py}px))`;
+  },{passive:false});
+
+  const resetJoy=()=>{
+    joystickActive=false;
+    mobileInput.mx=0; mobileInput.my=0;
+    knob.style.transform='translate(-50%,-50%)';
+  };
+  zone.addEventListener('touchend',  e=>{e.preventDefault();resetJoy();},{passive:false});
+  zone.addEventListener('touchcancel',e=>{e.preventDefault();resetJoy();},{passive:false});
+
+  // Attack button
+  const atkBtn=document.getElementById('btn-attack');
+  atkBtn.addEventListener('touchstart',e=>{e.preventDefault();playerAttack();},{passive:false});
+
+  // Roll button
+  const rollBtn=document.getElementById('btn-roll');
+  rollBtn.addEventListener('touchstart',e=>{e.preventDefault();playerRoll();},{passive:false});
 }
 </script>
 </body>
