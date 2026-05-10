@@ -62,16 +62,30 @@ body{background:#080604;display:flex;flex-direction:column;align-items:center;ju
 #game-wrap.active{display:flex;}
 canvas{display:block;image-rendering:pixelated;border:1px solid #1a1208;box-shadow:0 0 80px #000000bb;max-width:100%;max-height:100%;}
 
-/* ── HUD ── */
-#hud{position:fixed;top:0;left:0;padding:12px 14px;pointer-events:none;width:230px;z-index:10;}
-.bar-row{display:flex;align-items:center;gap:8px;margin-bottom:5px;}
-.bar-label{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:2px;width:18px;color:#c0966a;text-shadow:0 1px 4px #000;}
-.bar-bg{flex:1;height:10px;background:#14100acc;border:1px solid #3a2a1566;overflow:hidden;}
-.bar-fill{height:100%;transition:width .1s;}
-#hp-fill{background:linear-gradient(90deg,#8b1a1a,#c0392b);}
-#st-fill{background:linear-gradient(90deg,#1a5c2a,#27ae60);}
-#token-disp{position:fixed;top:10px;right:220px;font-family:'Cinzel',serif;font-size:.78rem;letter-spacing:2px;color:#f5d050;text-shadow:0 0 12px #f0c04099;z-index:10;}
-#level-disp{position:fixed;top:30px;right:220px;font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:2px;color:#aa9060;z-index:10;}
+/* ── HUD — LEFT SIDE: bars only ── */
+#hud{position:fixed;top:10px;left:10px;pointer-events:none;z-index:15;display:flex;flex-direction:column;gap:5px;}
+.bar-row{display:flex;align-items:center;gap:8px;}
+.bar-label{font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:2px;width:20px;color:#e0b87a;text-shadow:0 1px 6px #000;font-weight:600;}
+.bar-bg{height:11px;background:#14100acc;border:1px solid #5a3a1888;overflow:hidden;border-radius:2px;min-width:120px;max-width:200px;width:160px;transition:width .4s ease;}
+.bar-fill{height:100%;transition:width .15s;}
+#hp-fill{background:linear-gradient(90deg,#6b0f0f,#c0392b,#e84040);}
+#st-fill{background:linear-gradient(90deg,#0f4a1a,#27ae60,#3ddd7a);}
+
+/* ── TOP-RIGHT BUTTON CLUSTER ── */
+#top-right-btns{position:fixed;top:10px;right:10px;display:flex;gap:6px;z-index:20;align-items:center;}
+#top-right-btns button{font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:2px;padding:7px 13px;cursor:pointer;transition:all .2s;border-radius:2px;}
+#pause-btn{color:#e0c880;background:#1a140a;border:1px solid #8a6a30aa;}
+#pause-btn:hover{color:#fff8d0;background:#2a1e0e;border-color:#c9a96e;box-shadow:0 0 10px #c9a96e44;}
+#sound-btn{color:#80c8e0;background:#0a1418;border:1px solid #306a8aaa;}
+#sound-btn:hover{color:#c0eeff;background:#0e1e28;border-color:#60aacc;box-shadow:0 0 10px #60aacc44;}
+#fullscreen-btn{color:#90d090;background:#0a1a0a;border:1px solid #307830aa;}
+#fullscreen-btn:hover{color:#c0ffc0;background:#0e220e;border-color:#60cc60;box-shadow:0 0 10px #60cc6044;}
+#exit-btn{color:#e08060;background:#1a0a08;border:1px solid #8a3020aa;}
+#exit-btn:hover{color:#ffb090;background:#220e0a;border-color:#cc6040;box-shadow:0 0 10px #cc604044;}
+
+/* ── TOKEN + LEVEL: below the button cluster ── */
+#token-disp{position:fixed;top:44px;right:10px;font-family:'Cinzel',serif;font-size:.78rem;letter-spacing:2px;color:#f5d050;text-shadow:0 0 14px #f0c040bb;z-index:15;text-align:right;}
+#level-disp{position:fixed;top:64px;right:10px;font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:2px;color:#c9a060;z-index:15;text-align:right;}
 #weapon-disp{position:fixed;bottom:14px;left:14px;font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:1px;color:#c0a870;pointer-events:none;z-index:10;}
 #armor-disp{position:fixed;bottom:28px;left:14px;font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:1px;color:#80a0c0;pointer-events:none;z-index:10;}
 
@@ -155,13 +169,22 @@ canvas{display:block;image-rendering:pixelated;border:1px solid #1a1208;box-shad
 .mob-exit-btn{color:#7a3020 !important;border-color:#5a1f1055 !important;}
 .mob-exit-btn:active{color:#ff8866 !important;border-color:#8b3a2a88 !important;}
 
-/* Landscape-specific mobile layout */
+/* ── MOBILE responsive overrides ── */
+@media (max-width:600px){
+  #top-right-btns button{font-size:.5rem;padding:5px 8px;letter-spacing:1px;}
+  #top-right-btns{gap:4px;top:8px;right:6px;}
+  #token-disp{font-size:.65rem;top:38px;right:6px;}
+  #level-disp{font-size:.55rem;top:56px;right:6px;}
+  #hud{padding:8px 8px;}
+  .bar-label{font-size:.52rem;width:16px;}
+  .bar-bg{min-width:80px;width:120px;height:9px;}
+}
 @media (orientation:landscape) and (max-height:500px){
   #joystick-zone{bottom:20px;left:60px;width:120px;height:120px;}
   #action-btns{bottom:20px;right:40px;gap:12px;}
   .act-btn{width:58px;height:58px;font-size:.55rem;}
-  #mobile-topbar{padding:5px;gap:12px;}
-  .mob-top-btn{padding:4px 12px;font-size:.52rem;}
+  #mobile-topbar{padding:5px;gap:10px;}
+  .mob-top-btn{padding:4px 10px;font-size:.5rem;}
 }
 
 /* ── LEVEL INTRO ── */
@@ -313,11 +336,11 @@ canvas{display:block;image-rendering:pixelated;border:1px solid #1a1208;box-shad
 
 <script>
 // ═══════════════════════════════════════════════════════════
-//  SOUND ENGINE  (Web Audio API — no files needed)
+//  SOUND ENGINE — Hard Metallic (Web Audio API)
 // ═══════════════════════════════════════════════════════════
 let audioCtx = null;
 let soundMuted = false;
-let menuMusicNodes = null; // holds oscillator + gain for menu music
+let menuMusicNodes = null;
 
 function getAudioCtx(){
   if(!audioCtx) audioCtx = new (window.AudioContext||window.webkitAudioContext)();
@@ -325,215 +348,294 @@ function getAudioCtx(){
   return audioCtx;
 }
 
-// Core synth: plays a shaped tone
-function playTone(freq, type, duration, vol, attack=0.005, decay=0.1, freqEnd=null, delayStart=0){
+// ── Core synth primitives ────────────────────────────────
+function tone(freq, type, dur, vol, att=0.003, freqEnd=null, delay=0, distort=false){
   if(soundMuted) return;
   try{
-    const ac = getAudioCtx();
-    const osc = ac.createOscillator();
-    const gain = ac.createGain();
-    const now = ac.currentTime + delayStart;
-    osc.type = type;
-    osc.frequency.setValueAtTime(freq, now);
-    if(freqEnd) osc.frequency.exponentialRampToValueAtTime(Math.max(freqEnd,1), now+duration);
-    gain.gain.setValueAtTime(0, now);
-    gain.gain.linearRampToValueAtTime(vol, now+attack);
-    gain.gain.exponentialRampToValueAtTime(0.001, now+duration);
-    osc.connect(gain); gain.connect(ac.destination);
-    osc.start(now); osc.stop(now+duration+0.05);
+    const ac=getAudioCtx(), now=ac.currentTime+delay;
+    const osc=ac.createOscillator();
+    const gain=ac.createGain();
+    osc.type=type; osc.frequency.setValueAtTime(freq,now);
+    if(freqEnd) osc.frequency.exponentialRampToValueAtTime(Math.max(freqEnd,1),now+dur);
+    gain.gain.setValueAtTime(0,now);
+    gain.gain.linearRampToValueAtTime(vol,now+att);
+    gain.gain.exponentialRampToValueAtTime(0.001,now+dur);
+    let node=osc;
+    if(distort){
+      const wave=ac.createWaveShaper();
+      const curve=new Float32Array(256);
+      for(let i=0;i<256;i++){const x=i*2/256-1;curve[i]=Math.tanh(x*6);}
+      wave.curve=curve;
+      osc.connect(wave); wave.connect(gain);
+    } else { osc.connect(gain); }
+    gain.connect(ac.destination);
+    osc.start(now); osc.stop(now+dur+0.05);
   }catch(e){}
 }
 
-function playNoise(duration, vol, filterFreq=800){
+function metalNoise(dur, vol, filterFreq=900, filterQ=8, delay=0){
   if(soundMuted) return;
   try{
-    const ac = getAudioCtx();
-    const bufSize = ac.sampleRate * duration;
-    const buf = ac.createBuffer(1, bufSize, ac.sampleRate);
-    const data = buf.getChannelData(0);
-    for(let i=0;i<bufSize;i++) data[i]=(Math.random()*2-1);
-    const src = ac.createBufferSource();
-    src.buffer = buf;
-    const filter = ac.createBiquadFilter();
-    filter.type='bandpass'; filter.frequency.value=filterFreq;
-    const gain = ac.createGain();
-    gain.gain.setValueAtTime(vol,ac.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+duration);
-    src.connect(filter); filter.connect(gain); gain.connect(ac.destination);
-    src.start(); src.stop(ac.currentTime+duration);
+    const ac=getAudioCtx(), now=ac.currentTime+delay;
+    const size=Math.ceil(ac.sampleRate*dur);
+    const buf=ac.createBuffer(1,size,ac.sampleRate);
+    const d=buf.getChannelData(0);
+    for(let i=0;i<size;i++) d[i]=Math.random()*2-1;
+    const src=ac.createBufferSource(); src.buffer=buf;
+    const f1=ac.createBiquadFilter(); f1.type='bandpass';
+    f1.frequency.value=filterFreq; f1.Q.value=filterQ;
+    const f2=ac.createBiquadFilter(); f2.type='highpass';
+    f2.frequency.value=filterFreq*0.5;
+    const gain=ac.createGain();
+    gain.gain.setValueAtTime(vol,now);
+    gain.gain.exponentialRampToValueAtTime(0.001,now+dur);
+    src.connect(f1); f1.connect(f2); f2.connect(gain); gain.connect(ac.destination);
+    src.start(now); src.stop(now+dur);
   }catch(e){}
 }
 
-// ── Individual sound events ──────────────────────────────
-const SFX = {
-  // UI
-  menuHover(){ playTone(440,'sine',0.08,0.08); },
-  menuClick(){ playTone(320,'triangle',0.15,0.15,0.005,0.12,200); },
-  shopBuy(){
-    playTone(523,'sine',0.12,0.15);
-    playTone(659,'sine',0.14,0.12,0.005,0.12,null,0.1);
-    playTone(784,'sine',0.18,0.1,0.005,0.18,null,0.2);
-  },
-  shopOpen(){ playTone(220,'triangle',0.3,0.12,0.01,0.28,300); },
-  shopClose(){ playTone(300,'triangle',0.2,0.1,0.01,0.18,180); },
-  notEnoughTokens(){ playTone(120,'sawtooth',0.18,0.12,0.005,0.16,80); },
-  pause(){ playTone(260,'sine',0.2,0.1,0.01,0.18,200); },
-  resume(){ playTone(330,'sine',0.18,0.1,0.005,0.16,440); },
-  levelClear(){
-    [392,494,587,784].forEach((f,i)=>{
-      playTone(f,'sine',0.35,0.18,0.01,0.3,null,i*0.14);
-    });
-  },
-  youDied(){
-    playTone(150,'sawtooth',0.6,0.18,0.02,0.55,60);
-    playTone(100,'sawtooth',0.8,0.14,0.05,0.75,50,0.3);
-  },
-  levelIntro(){
-    playTone(110,'sine',0.5,0.1,0.02,0.48,150);
-    playTone(165,'sine',0.6,0.08,0.05,0.55,null,0.3);
-  },
+function clang(freq, dur, vol, delay=0){
+  // metallic clang = sine + triangle + noise burst
+  tone(freq,'sine',dur,vol*0.7,0.001,freq*0.3,delay);
+  tone(freq*1.5,'triangle',dur*0.6,vol*0.4,0.001,freq*0.5,delay);
+  metalNoise(dur*0.15,vol*0.5,freq*2,5,delay);
+}
 
-  // Weapons
-  swordSwing(){   playTone(300,'sawtooth',0.12,0.18,0.002,0.1,100); playNoise(0.08,0.08,1200); },
-  swordHit(){     playTone(180,'square',0.15,0.22,0.002,0.13,80); playNoise(0.1,0.12,600); },
-  silverSwing(){  playTone(420,'sine',0.1,0.16,0.002,0.09,200); playNoise(0.07,0.07,1600); },
-  flameSwing(){
-    playTone(200,'sawtooth',0.12,0.2,0.002,0.1,80);
-    playNoise(0.15,0.14,400);
-    playTone(80,'sine',0.2,0.12,0.01,0.18,40);
-  },
-  shadowSwing(){
-    playTone(80,'sawtooth',0.18,0.2,0.005,0.15,40);
-    playTone(160,'square',0.12,0.12,0.002,0.1,60);
-  },
-  thunderSwing(){
-    playNoise(0.06,0.22,2000);
-    playTone(440,'square',0.08,0.2,0.001,0.07,200);
-    playTone(880,'sawtooth',0.06,0.14,0.001,0.05,300,0.03);
-  },
-  saberSwing(){
-    playTone(600,'sine',0.18,0.14,0.005,0.16,400);
-    playNoise(0.12,0.06,3000);
-  },
-  saberHum(){
-    playTone(120,'sine',0.06,0.04,0.01,0.2,110);
-  },
+function grind(freq, dur, vol, delay=0){
+  tone(freq,'sawtooth',dur,vol,0.002,freq*0.4,delay,true);
+  metalNoise(dur,vol*0.6,freq*1.5,3,delay);
+}
 
-  // Combat
-  playerHit(){
-    playTone(120,'sawtooth',0.2,0.22,0.002,0.18,60);
-    playNoise(0.12,0.15,300);
+function boom(freq, dur, vol, delay=0){
+  tone(freq,'sine',dur,vol,0.005,freq*0.2,delay);
+  tone(freq*0.7,'triangle',dur*0.8,vol*0.5,0.005,freq*0.15,delay);
+  metalNoise(dur*0.3,vol*0.4,200,2,delay);
+}
+
+// ── Weapon sounds ─────────────────────────────────────────
+const WEAPON_SFX = {
+  iron(){
+    // Steel sword — sharp clang + air cut
+    clang(380, 0.18, 0.9);
+    metalNoise(0.06, 0.7, 1800, 6, 0.01);
   },
-  playerDodge(){
-    playTone(500,'sine',0.1,0.08,0.002,0.08,300);
-    playNoise(0.06,0.05,2000);
+  silver(){
+    // Silver — high crystalline ring
+    clang(520, 0.28, 0.8);
+    tone(1040,'sine',0.25,0.3,0.001,600,0.02);
+    metalNoise(0.04, 0.4, 3000, 12);
   },
-  enemyHit(){     playTone(200,'square',0.1,0.18,0.002,0.08,100); playNoise(0.07,0.1,800); },
-  enemyDeath(){
-    playTone(150,'sawtooth',0.25,0.2,0.005,0.22,60);
-    playNoise(0.18,0.15,400);
-    playTone(80,'sine',0.3,0.1,0.02,0.28,40,0.1);
+  flame(){
+    // Flame cleaver — low grind + crackle
+    grind(140, 0.22, 0.7);
+    tone(60,'sine',0.3,0.5,0.005,30);
+    metalNoise(0.18, 0.5, 300, 3);
   },
-  enemyAttackCharge(){ if(Math.random()<0.04) playTone(180,'triangle',0.15,0.06,0.01,0.12,220); },
-  tokenEarn(){    playTone(880,'sine',0.08,0.08,0.002,0.06); },
-  upgradeGet(){
-    playTone(440,'sine',0.18,0.14);
-    playTone(660,'sine',0.22,0.12,0.005,0.18,null,0.12);
-    playTone(880,'sine',0.28,0.1,0.005,0.22,null,0.24);
+  shadow(){
+    // Shadow fang — dark hollow thud + void hiss
+    boom(80, 0.3, 0.8);
+    tone(55,'sawtooth',0.2,0.4,0.01,40,0,true);
+    metalNoise(0.12, 0.4, 180, 2);
+  },
+  thunder(){
+    // Thunderstrike — electric crack + high snap
+    metalNoise(0.04, 1.0, 4000, 15);
+    tone(220,'square',0.08,0.7,0.001,100,0,true);
+    metalNoise(0.08, 0.5, 1500, 8, 0.03);
+    tone(880,'sine',0.06,0.4,0.001,200,0.02);
+  },
+  saber(){
+    // Lightsaber — plasma hum + high freq whip
+    tone(180,'sine',0.15,0.6,0.005,160);
+    tone(360,'sine',0.12,0.3,0.003,280,0.02);
+    metalNoise(0.08, 0.4, 2500, 10);
+    tone(720,'triangle',0.1,0.2,0.001,400,0.04);
   },
 };
 
-// ── Weapon swing sound selector ──────────────────────────
-function playWeaponSwing(){
-  const id = equippedWeapon.id;
-  if(id==='iron')    SFX.swordSwing();
-  else if(id==='silver') SFX.silverSwing();
-  else if(id==='flame')  SFX.flameSwing();
-  else if(id==='shadow') SFX.shadowSwing();
-  else if(id==='thunder') SFX.thunderSwing();
-  else if(id==='saber')  SFX.saberSwing();
+// ── Enemy sounds — unique per type ────────────────────────
+const ENEMY_SFX = {
+  // Level 1 grunts
+  grunt_hit(){   clang(250,0.14,0.8); metalNoise(0.08,0.6,600,5); },
+  grunt_death(){ boom(120,0.4,0.9); grind(180,0.2,0.5,0.1); },
+  grunt_atk(){   tone(200,'sawtooth',0.12,0.4,0.005,100,0,true); },
+
+  fast_hit(){    clang(420,0.1,0.7); metalNoise(0.05,0.5,2200,8); },
+  fast_death(){  tone(300,'sawtooth',0.2,0.7,0.002,80,0,true); metalNoise(0.1,0.5,1200,6); },
+  fast_atk(){    metalNoise(0.06,0.4,1500,10); },
+
+  brute_hit(){   boom(80,0.3,1.0); metalNoise(0.12,0.8,300,3); },
+  brute_death(){ boom(55,0.6,1.0); grind(90,0.3,0.7,0.15); boom(40,0.4,0.6,0.3); },
+  brute_atk(){   boom(70,0.2,0.6); metalNoise(0.15,0.5,200,2); },
+
+  // Level 2 swamp
+  swamp_hit(){   tone(140,'square',0.16,0.7,0.005,60,0,true); metalNoise(0.1,0.5,400,4); },
+  swamp_death(){ boom(100,0.4,0.8); tone(80,'sine',0.3,0.4,0.01,40,0.2); },
+  swamp_brute_hit(){  boom(65,0.35,0.95); metalNoise(0.14,0.7,250,3); },
+  swamp_brute_death(){ boom(45,0.7,1.0); boom(60,0.4,0.7,0.2); grind(70,0.25,0.5,0.35); },
+  venom_hit(){   tone(500,'triangle',0.1,0.6,0.002,200); metalNoise(0.06,0.4,1800,9); },
+  venom_death(){ tone(350,'sawtooth',0.18,0.7,0.003,100,0,true); metalNoise(0.08,0.4,1000,7); },
+
+  // Level 3 ice
+  ice_hit(){     clang(600,0.18,0.7); metalNoise(0.06,0.5,2800,14); },
+  ice_death(){   clang(500,0.3,0.8); metalNoise(0.12,0.5,2500,10,0.05); clang(700,0.2,0.5,0.1); },
+  ice_giant_hit(){ boom(70,0.4,1.0); clang(400,0.2,0.6,0.05); },
+  ice_giant_death(){ boom(50,0.7,1.0); boom(70,0.5,0.8,0.2); clang(300,0.3,0.7,0.3); },
+  frost_hit(){   clang(700,0.12,0.6); metalNoise(0.04,0.4,3500,16); },
+  frost_death(){ clang(600,0.2,0.7); clang(800,0.15,0.5,0.08); },
+
+  // Level 4 demons
+  demon_hit(){   grind(160,0.18,0.8); boom(90,0.2,0.6); },
+  demon_death(){ grind(120,0.25,0.9,0); boom(80,0.4,0.7,0.12); metalNoise(0.2,0.5,350,3,0.1); },
+  hellknight_hit(){ boom(55,0.45,1.0); grind(100,0.25,0.7,0.08); },
+  hellknight_death(){ boom(40,0.8,1.0); boom(60,0.5,0.8,0.25); grind(80,0.3,0.6,0.4); boom(35,0.4,0.5,0.55); },
+
+  // Level 5 void
+  void_hit(){    tone(80,'sine',0.2,0.5,0.005,30); metalNoise(0.1,0.6,180,2); },
+  void_death(){  tone(60,'sawtooth',0.3,0.6,0.01,20,0,true); metalNoise(0.15,0.5,200,2); },
+  lich_hit(){    boom(60,0.4,0.9); tone(120,'sawtooth',0.2,0.4,0.005,50,0.1,true); },
+  lich_death(){  boom(45,0.6,1.0); boom(60,0.4,0.8,0.2); boom(40,0.5,0.7,0.4); metalNoise(0.25,0.5,150,2,0.15); },
+  voidlord_hit(){ boom(40,0.5,1.0); grind(70,0.3,0.8,0.1); metalNoise(0.2,0.6,120,2); },
+  voidlord_death(){
+    boom(35,0.8,1.0); boom(50,0.6,0.9,0.25); boom(40,0.7,0.8,0.5);
+    grind(60,0.4,0.6,0.4); metalNoise(0.3,0.5,100,2,0.3);
+  },
+};
+
+function getEnemySfx(typeName, event){
+  const key = typeName+'_'+event;
+  if(ENEMY_SFX[key]) ENEMY_SFX[key]();
+  else {
+    // Fallback groups
+    if(event==='hit')   { clang(300,0.14,0.75); metalNoise(0.08,0.5,700,5); }
+    if(event==='death') { boom(100,0.4,0.8); grind(140,0.2,0.5,0.1); }
+    if(event==='atk')   { metalNoise(0.1,0.4,500,4); }
+  }
 }
 
-// ── Menu music (ambient drone + melody) ──────────────────
+// ── UI / Player sounds ────────────────────────────────────
+const SFX = {
+  menuHover(){ tone(660,'sine',0.06,0.08,0.002,580); },
+  menuClick(){ clang(440,0.1,0.5); },
+  shopOpen(){  tone(180,'triangle',0.25,0.3,0.01,250); metalNoise(0.08,0.2,600,5); },
+  shopClose(){ tone(250,'triangle',0.2,0.25,0.01,180); },
+  shopBuy(){
+    clang(520,0.12,0.6);
+    clang(660,0.14,0.5,0.1);
+    clang(880,0.18,0.4,0.2);
+  },
+  notEnoughTokens(){ grind(100,0.18,0.7); tone(80,'sawtooth',0.12,0.5,0.003,60,0.05,true); },
+  pause(){     tone(220,'sine',0.2,0.3,0.01,200); metalNoise(0.06,0.2,800,6); },
+  resume(){    tone(330,'sine',0.18,0.3,0.005,400); },
+  playerHit(){
+    boom(110,0.22,0.9);
+    metalNoise(0.12,0.8,400,4);
+    tone(80,'sawtooth',0.15,0.5,0.002,50,0,true);
+  },
+  playerDodge(){
+    metalNoise(0.05,0.5,2500,12);
+    tone(400,'sine',0.1,0.25,0.002,200);
+  },
+  levelClear(){
+    clang(330,0.3,0.7,0);
+    clang(440,0.35,0.7,0.15);
+    clang(550,0.4,0.7,0.3);
+    clang(660,0.5,0.8,0.45);
+  },
+  youDied(){
+    boom(55,0.9,0.9);
+    grind(80,0.6,0.7,0.2);
+    boom(40,0.7,0.6,0.5);
+  },
+  levelIntro(){
+    boom(80,0.6,0.5);
+    tone(110,'sine',0.8,0.3,0.05,150,0.1);
+  },
+  upgradeGet(){
+    clang(440,0.18,0.6,0);
+    clang(660,0.22,0.6,0.12);
+    clang(880,0.28,0.6,0.24);
+  },
+  enemyAttackCharge(){ if(Math.random()<0.04) tone(160,'triangle',0.15,0.1,0.01,200); },
+  tokenEarn(){ tone(880,'sine',0.07,0.15,0.002,700); },
+};
+
+function playWeaponSwing(){
+  const fn = WEAPON_SFX[equippedWeapon.id];
+  if(fn) fn(); else WEAPON_SFX.iron();
+}
+
+// ── Menu music — dark ambient ─────────────────────────────
 function startMenuMusic(){
   if(soundMuted) return;
   stopMenuMusic();
   try{
-    const ac = getAudioCtx();
-    const masterGain = ac.createGain();
-    masterGain.gain.setValueAtTime(0,ac.currentTime);
-    masterGain.gain.linearRampToValueAtTime(0.15, ac.currentTime+2);
-    masterGain.connect(ac.destination);
+    const ac=getAudioCtx();
+    const master=ac.createGain();
+    master.gain.setValueAtTime(0,ac.currentTime);
+    master.gain.linearRampToValueAtTime(0.18,ac.currentTime+3);
+    master.connect(ac.destination);
 
-    // Deep drone
-    const drone = ac.createOscillator();
-    drone.type='sine'; drone.frequency.value=55;
-    const droneGain = ac.createGain(); droneGain.gain.value=0.4;
-    drone.connect(droneGain); droneGain.connect(masterGain);
-    drone.start();
+    // Sub-bass drone only — clean sine, no distortion
+    const d1=ac.createOscillator(); d1.type='sine'; d1.frequency.value=41.2;
+    const d1g=ac.createGain(); d1g.gain.value=0.35;
+    d1.connect(d1g); d1g.connect(master); d1.start();
 
-    // Mid drone
-    const drone2 = ac.createOscillator();
-    drone2.type='triangle'; drone2.frequency.value=82.5;
-    const d2g = ac.createGain(); d2g.gain.value=0.2;
-    drone2.connect(d2g); d2g.connect(masterGain);
-    drone2.start();
+    // Slow metallic bell melody
+    const notes=[82.4,73.4,82.4,65.4,73.4,61.7,65.4,73.4];
+    const melGain=ac.createGain(); melGain.gain.value=0.35;
+    melGain.connect(master);
 
-    // Slow melody line using scheduled notes
-    const melodyNotes = [110,130,110,98,110,123,110,98,
-                         146,130,110,98,110,82,98,110];
-    const melodyGain = ac.createGain(); melodyGain.gain.value=0.3;
-    melodyGain.connect(masterGain);
-
-    function scheduleMelody(startTime){
-      melodyNotes.forEach((freq,i)=>{
-        const osc = ac.createOscillator();
-        osc.type='sine'; osc.frequency.value=freq;
-        const g = ac.createGain();
-        const t = startTime + i*1.4;
-        g.gain.setValueAtTime(0,t);
-        g.gain.linearRampToValueAtTime(0.8,t+0.3);
-        g.gain.exponentialRampToValueAtTime(0.001,t+1.3);
-        osc.connect(g); g.connect(melodyGain);
-        osc.start(t); osc.stop(t+1.4);
+    function scheduleMelody(t0){
+      notes.forEach((freq,i)=>{
+        const t=t0+i*1.8;
+        // bell = sine + 2nd harmonic decay
+        const o1=ac.createOscillator(); o1.type='sine'; o1.frequency.value=freq;
+        const o2=ac.createOscillator(); o2.type='triangle'; o2.frequency.value=freq*2.756;
+        const g1=ac.createGain(); const g2=ac.createGain();
+        g1.gain.setValueAtTime(0,t); g1.gain.linearRampToValueAtTime(0.7,t+0.02);
+        g1.gain.exponentialRampToValueAtTime(0.001,t+1.6);
+        g2.gain.setValueAtTime(0,t); g2.gain.linearRampToValueAtTime(0.25,t+0.01);
+        g2.gain.exponentialRampToValueAtTime(0.001,t+0.6);
+        o1.connect(g1); o2.connect(g2);
+        g1.connect(melGain); g2.connect(melGain);
+        o1.start(t); o1.stop(t+1.8);
+        o2.start(t); o2.stop(t+0.8);
       });
     }
     scheduleMelody(ac.currentTime+0.5);
-    // Loop melody
-    const loopInterval = setInterval(()=>{
-      if(soundMuted||!menuMusicNodes){ clearInterval(loopInterval); return; }
-      try{ scheduleMelody(ac.currentTime+0.1); }catch(e){ clearInterval(loopInterval); }
-    }, melodyNotes.length*1400);
+    const loopId=setInterval(()=>{
+      if(soundMuted||!menuMusicNodes){clearInterval(loopId);return;}
+      try{ scheduleMelody(ac.currentTime+0.1); }catch(e){clearInterval(loopId);}
+    }, notes.length*1800);
 
-    menuMusicNodes = { drone, drone2, masterGain, loopInterval };
+    menuMusicNodes={ d1, master, loopId };
   }catch(e){}
 }
 
 function stopMenuMusic(){
   if(!menuMusicNodes) return;
   try{
-    clearInterval(menuMusicNodes.loopInterval);
-    const ac = getAudioCtx();
-    menuMusicNodes.masterGain.gain.linearRampToValueAtTime(0, ac.currentTime+1.5);
-    setTimeout(()=>{
-      try{ menuMusicNodes.drone.stop(); menuMusicNodes.drone2.stop(); }catch(e){}
-    },1600);
+    clearInterval(menuMusicNodes.loopId);
+    const ac=getAudioCtx();
+    menuMusicNodes.master.gain.linearRampToValueAtTime(0,ac.currentTime+1.5);
+    setTimeout(()=>{ try{menuMusicNodes.d1.stop();}catch(e){} },1600);
   }catch(e){}
-  menuMusicNodes = null;
+  menuMusicNodes=null;
 }
 
 function toggleMute(){
-  soundMuted = !soundMuted;
-  const btn = document.getElementById('sound-btn');
-  const mobBtn = document.getElementById('mob-sound-btn');
+  soundMuted=!soundMuted;
+  const btn=document.getElementById('sound-btn');
+  const mob=document.getElementById('mob-sound-btn');
   if(soundMuted){
     if(btn) btn.textContent='🔇 MUTE';
-    if(mobBtn) mobBtn.textContent='🔇';
-    if(menuMusicNodes) menuMusicNodes.masterGain.gain.setValueAtTime(0, getAudioCtx().currentTime);
+    if(mob) mob.textContent='🔇';
+    if(menuMusicNodes) { try{menuMusicNodes.master.gain.setValueAtTime(0,getAudioCtx().currentTime);}catch(e){} }
   } else {
     if(btn) btn.textContent='🔊 SFX';
-    if(mobBtn) mobBtn.textContent='🔊';
-    if(menuMusicNodes) menuMusicNodes.masterGain.gain.linearRampToValueAtTime(0.15, getAudioCtx().currentTime+0.5);
+    if(mob) mob.textContent='🔊';
+    if(menuMusicNodes) { try{menuMusicNodes.master.gain.linearRampToValueAtTime(0.18,getAudioCtx().currentTime+0.5);}catch(e){} }
     else if(document.getElementById('title-screen').style.display!=='none'
          && document.getElementById('title-screen').style.display!=='') startMenuMusic();
   }
@@ -805,7 +907,7 @@ function playerAttack() {
     if (dist < w.reach+e.w/2) {
       let dmg = w.dmg + Math.floor(Math.random()*6);
       e.hp -= dmg; e.hitFlash=10; e.staggerTimer=20; e.state='stagger';
-      SFX.enemyHit();
+      getEnemySfx(e.typeName, 'hit');
       spawnDmgParticles(e.x+e.w/2, e.y+e.h/2, dmg, w.glow||'#ffaa44');
       if (w.id==='saber') spawnBeamEffect(player.x+player.w/2, player.y+player.h/2, e.x+e.w/2, e.y+e.h/2);
       screenShake(3,6);
@@ -830,7 +932,7 @@ function playerRoll() {
 function killEnemy(e) {
   e.dead=true; e.state='dead';
   tokens += e.token;
-  SFX.enemyDeath();
+  getEnemySfx(e.typeName, 'death');
   SFX.tokenEarn();
   spawnDeathParticles(e.x+e.w/2, e.y+e.h/2, e.color, 20);
   screenShake(5,12);
@@ -906,14 +1008,21 @@ function updateTokenDisp(){ document.getElementById('token-disp').textContent='�
 function updateLevelDisp(){ document.getElementById('level-disp').textContent='REALM '+['I','II','III','IV','V'][currentLevel]; }
 function updateWeaponDisp(){ document.getElementById('weapon-disp').textContent='⚔ '+equippedWeapon.name+' ('+equippedWeapon.dmg+' dmg)'; }
 function updateArmorDisp(){ document.getElementById('armor-disp').textContent='🛡 '+equippedArmor.name+' (-'+equippedArmor.defense+' def)'; }
-let _lhp=-1,_lst=-1;
+const BASE_HP = 100, BASE_ST = 100;
+const BAR_MIN_W = 120, BAR_MAX_W = 260;
+
 function updateHUD(){
-  const hp=Math.max(0,player.hp/player.maxHp)*100;
-  const st=Math.max(0,player.stamina/player.maxStamina)*100;
-  // Always update — don't cache-skip when max changes
-  document.getElementById('hp-fill').style.width=hp+'%';
-  document.getElementById('st-fill').style.width=st+'%';
-  _lhp=hp; _lst=st;
+  const hp = Math.max(0, player.hp / player.maxHp) * 100;
+  const st = Math.max(0, player.stamina / player.maxStamina) * 100;
+  document.getElementById('hp-fill').style.width = hp + '%';
+  document.getElementById('st-fill').style.width = st + '%';
+  // Grow the bar container width as max stat increases
+  const hpRatio = Math.min(player.maxHp / BASE_HP, 3);
+  const stRatio = Math.min(player.maxStamina / BASE_ST, 3);
+  const hpW = Math.round(BAR_MIN_W + (BAR_MAX_W - BAR_MIN_W) * ((hpRatio - 1) / 2));
+  const stW = Math.round(BAR_MIN_W + (BAR_MAX_W - BAR_MIN_W) * ((stRatio - 1) / 2));
+  document.getElementById('hp-fill').parentElement.style.width = hpW + 'px';
+  document.getElementById('st-fill').parentElement.style.width = stW + 'px';
 }
 
 function showMsg(text){
@@ -1003,7 +1112,7 @@ function update(){
         break;
       case 'attack':
         e.vx*=.5;e.vy*=.5;e.atkTimer++;
-        SFX.enemyAttackCharge();
+        if(e.atkTimer===1) getEnemySfx(e.typeName,'atk');
         if(e.atkTimer>=e.atkRate){e.atkTimer=0;if(dist<e.atkRng+8)enemyHitPlayer(e);}
         if(dist>e.atkRng+20) e.state='chase';
         break;
