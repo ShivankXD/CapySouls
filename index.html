@@ -169,6 +169,51 @@ canvas{display:block;image-rendering:pixelated;border:1px solid #1a1208;box-shad
 .mob-exit-btn{color:#7a3020 !important;border-color:#5a1f1055 !important;}
 .mob-exit-btn:active{color:#ff8866 !important;border-color:#8b3a2a88 !important;}
 
+/* ── SKILL TREE ── */
+#skill-tree-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-top:4px;}
+.skill-node{background:#0a0806;border:1px solid #2a1f12;padding:14px 16px;cursor:pointer;transition:all .22s;position:relative;overflow:hidden;}
+.skill-node::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent 60%,#c9a96e06);pointer-events:none;}
+.skill-node:hover:not(.skill-maxed){border-color:#c9a96e66;background:#14100a;}
+.skill-node.skill-maxed{border-color:#c9a96e44;opacity:.65;cursor:default;}
+.skill-node.skill-available{border-color:#6a8a4a88;}
+.skill-node .sk-icon{font-size:1.5rem;margin-bottom:6px;}
+.skill-node .sk-name{font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:2px;color:#dfc080;margin-bottom:3px;}
+.skill-node .sk-desc{font-size:.63rem;color:#7a6040;font-style:italic;line-height:1.5;margin-bottom:8px;}
+.skill-node .sk-rank{font-family:'Cinzel',serif;font-size:.6rem;color:#c9a96e88;margin-bottom:4px;}
+.skill-node .sk-cost{font-family:'Cinzel',serif;font-size:.68rem;color:#f0c040;}
+.skill-node .sk-cost.maxed{color:#6a8a4a;}
+.skill-pip-row{display:flex;gap:4px;margin-bottom:6px;}
+.skill-pip{width:14px;height:5px;border:1px solid #3a2a14;border-radius:1px;}
+.skill-pip.filled{background:#c9a96e;}
+
+/* ── LORE POPUP ── */
+#lore-popup{position:fixed;inset:0;background:#000000cc;display:flex;align-items:center;justify-content:center;z-index:200;opacity:0;pointer-events:none;transition:opacity .4s;}
+#lore-popup.show{opacity:1;pointer-events:all;}
+#lore-popup-inner{background:#0c0a06;border:1px solid #5a3a14;max-width:460px;width:90%;padding:32px 36px;box-shadow:0 0 80px #00000099,inset 0 0 30px #c9a96e05;position:relative;}
+#lore-popup-inner::before{content:'';position:absolute;inset:8px;border:1px solid #3a2a0e22;pointer-events:none;}
+#lore-popup-title{font-family:'Cinzel',serif;font-size:1rem;letter-spacing:4px;color:#c9a96e;margin-bottom:14px;text-align:center;text-shadow:0 0 20px #c9a96e44;}
+#lore-popup-text{font-size:.82rem;color:#9a8060;line-height:1.9;font-style:italic;text-align:center;margin-bottom:22px;}
+#lore-popup-close{font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:3px;color:#5a4020;text-align:center;cursor:pointer;transition:color .2s;}
+#lore-popup-close:hover{color:#c9a96e;}
+
+/* ── LORE LOG IN SHOP ── */
+#lore-log{display:flex;flex-direction:column;gap:8px;}
+.lore-entry{background:#0a0806;border:1px solid #2a1f12;padding:10px 14px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:12px;}
+.lore-entry:hover{border-color:#c9a96e44;background:#12100a;}
+.lore-entry .le-icon{font-size:1.2rem;flex-shrink:0;}
+.lore-entry .le-title{font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:2px;color:#dfc080;}
+.lore-entry .le-preview{font-size:.6rem;color:#6a5030;font-style:italic;margin-top:2px;}
+.lore-entry-new{border-color:#c9a96e66 !important;animation:lore-pulse 2s ease infinite;}
+@keyframes lore-pulse{0%,100%{box-shadow:0 0 0 #c9a96e00;}50%{box-shadow:0 0 10px #c9a96e33;}}
+
+/* ── KILL STREAK ── */
+#streak-disp{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);font-family:'Cinzel',serif;letter-spacing:4px;text-align:center;pointer-events:none;z-index:40;transition:transform .25s cubic-bezier(.2,1.6,.4,1),opacity .3s;opacity:0;}
+#streak-disp.show{transform:translate(-50%,-50%) scale(1);opacity:1;}
+#streak-disp.hide{transform:translate(-50%,-50%) scale(0.7);opacity:0;}
+.streak-num{font-size:clamp(2rem,8vw,4rem);color:#f0c040;text-shadow:0 0 30px #f0c04099,0 0 60px #f0c04044;line-height:1;}
+.streak-label{font-size:clamp(.6rem,2vw,.85rem);color:#c9a96e;letter-spacing:6px;margin-top:4px;opacity:.8;}
+.streak-bonus{font-size:clamp(.5rem,1.8vw,.75rem);color:#88cc88;letter-spacing:2px;margin-top:2px;}
+
 /* ── MOBILE responsive overrides ── */
 @media (max-width:600px){
   #top-right-btns button{font-size:.5rem;padding:5px 8px;letter-spacing:1px;}
@@ -330,9 +375,31 @@ canvas{display:block;image-rendering:pixelated;border:1px solid #1a1208;box-shad
       <div id="upgrade-list"></div>
     </div>
 
+    <div class="shop-section">
+      <h3>🌿 SKILL TREE</h3>
+      <div id="skill-tree-grid"></div>
+    </div>
+
+    <div class="shop-section">
+      <h3>📜 LORE COLLECTED</h3>
+      <div id="lore-log"></div>
+    </div>
+
     <button class="big-btn shop-close" onclick="closeShop()">RETURN TO BATTLE</button>
   </div>
 </div>
+
+<!-- LORE POPUP -->
+<div id="lore-popup">
+  <div id="lore-popup-inner">
+    <div id="lore-popup-title"></div>
+    <div id="lore-popup-text"></div>
+    <div id="lore-popup-close" onclick="closeLorePopup()">— CLOSE —</div>
+  </div>
+</div>
+
+<!-- KILL STREAK HUD -->
+<div id="streak-disp"></div>
 
 <script>
 // ═══════════════════════════════════════════════════════════
@@ -836,11 +903,14 @@ function initLevel(lvlIdx, preservePlayer) {
   enemies = levelConfig.enemies.map(e => makeEnemy(e.x, e.y, e.type));
   particles = [];
   gameState = 'intro';
+  resetStreak();
   hideAllOverlays();
   updateLevelDisp();
   updateWeaponDisp();
   updateArmorDisp();
   showLevelIntro(lvlIdx);
+  // Apply all skill effects to fresh player
+  applySkillEffects();
 }
 
 function showLevelIntro(lvlIdx) {
@@ -873,7 +943,10 @@ function showOverlay(id) {
 // ═══════════════════════════════════════════════════════════
 document.addEventListener('keydown', e => {
   keys[e.key.toLowerCase()] = true;
-  if (e.key === 'Escape') { if(gameState==='playing'||paused) togglePause(); }
+  if (e.key === 'Escape') {
+    if(document.getElementById('lore-popup').classList.contains('show')){ closeLorePopup(); }
+    else if(gameState==='playing'||paused) togglePause();
+  }
   if (e.key.toLowerCase() === 'p' && gameState === 'playing' && !paused) openShop();
   e.preventDefault();
 });
@@ -896,7 +969,8 @@ function playerAttack() {
   if (player.atkCD>0||player.isRolling) return;
   if (player.stamina<20){ showMsg('NOT ENOUGH STAMINA'); return; }
   drainSt(20);
-  player.isAttacking=true; player.atkDur=22; player.atkCD=40;
+  player.isAttacking=true; player.atkDur=22;
+  player.atkCD = Math.round(40*(player.atkCDMult||1));
   playWeaponSwing();
   const w=equippedWeapon;
   const ax=player.x+player.w/2 + player.facing*(player.w/2+10);
@@ -905,7 +979,7 @@ function playerAttack() {
     if (e.dead) return;
     const dist = Math.hypot(ax-(e.x+e.w/2), ay-(e.y+e.h/2));
     if (dist < w.reach+e.w/2) {
-      let dmg = w.dmg + Math.floor(Math.random()*6);
+  let dmg = w.dmg + Math.floor(Math.random()*6) + (playerStats.bonusDmg||0);
       e.hp -= dmg; e.hitFlash=10; e.staggerTimer=20; e.state='stagger';
       getEnemySfx(e.typeName, 'hit');
       spawnDmgParticles(e.x+e.w/2, e.y+e.h/2, dmg, w.glow||'#ffaa44');
@@ -924,22 +998,34 @@ function playerRoll() {
   const dy=isKey('s','arrowdown')?1:isKey('w','arrowup')?-1:0;
   const len=Math.hypot(dx,dy)||1;
   player.rollDir={x:dx/len,y:dy/len};
-  player.isRolling=true; player.rollDur=18; player.rollCD=45; player.invincible=22;
+  player.isRolling=true; player.rollDur=18; player.rollCD=45;
+  player.invincible=22+(playerStats.bonusIframes||0);
   SFX.playerDodge();
   spawnTrail(player.x+player.w/2, player.y+player.h/2);
 }
 
 function killEnemy(e) {
   e.dead=true; e.state='dead';
-  tokens += e.token;
+  // Streak bonus tokens
+  onKillStreak();
+  const streakBonus = killStreak>=2 ? (playerStats.streakBonus||0) : 0;
+  tokens += e.token + streakBonus;
   getEnemySfx(e.typeName, 'death');
   SFX.tokenEarn();
   spawnDeathParticles(e.x+e.w/2, e.y+e.h/2, e.color, 20);
   screenShake(5,12);
-  showMsg('+'+e.token+' 🪙  '+e.name+' DEFEATED');
+  showMsg('+'+e.token+(streakBonus?'+'+streakBonus+'🔥':'')+' 🪙  '+e.name+' DEFEATED');
   updateTokenDisp();
+  // Lore drop
+  tryDropLore(e.typeName, e.name);
+  if(pendingLore){
+    setTimeout(()=>{
+      if(pendingLore && gameState==='playing') showLorePopup(pendingLore);
+    }, 1200);
+  }
   if (enemies.every(en=>en.dead)) {
     gameState='cleared';
+    resetStreak();
     SFX.levelClear();
     const romans=['I','II','III','IV','V'];
     document.getElementById('lc-title').textContent = 'REALM '+romans[currentLevel]+' CLEARED';
@@ -956,7 +1042,7 @@ function killEnemy(e) {
 function enemyHitPlayer(e) {
   if (player.invincible>0||player.dead) return;
   let rawDmg = e.dmg;
-  let def = equippedArmor.defense;
+  let def = equippedArmor.defense + (player.bonusDef||0);
   let dmg = Math.max(1, rawDmg - def);
   player.hp -= dmg; player.hitFlash=16; player.invincible=35;
   SFX.playerHit();
@@ -967,6 +1053,7 @@ function enemyHitPlayer(e) {
 
 function killPlayer() {
   player.dead=true; player.hp=0; gameState='dead';
+  resetStreak();
   SFX.youDied();
   spawnDeathParticles(player.x+player.w/2, player.y+player.h/2, '#c9a96e',30);
   showOverlay('you-died');
@@ -1047,6 +1134,8 @@ function update(){
   if(gameState!=='playing'||paused) return;
   frameCount++;
   if(shakeTimer>0) shakeTimer--;
+  // Streak timeout
+  if(streakTimer>0){ streakTimer--; if(streakTimer<=0) resetStreak(); }
 
   // ── Player ──
   if(!player.dead){
@@ -1379,6 +1468,11 @@ function returnToMenu(){
   ARMORS.forEach((a,i)=>{if(i>0)a.owned=false;});
   equippedWeapon=WEAPONS[0]; equippedArmor=ARMORS[0];
   tokens=0; currentLevel=0;
+  skillRanks={};
+  collectedLore=[];
+  pendingLore=null;
+  killStreak=0; streakTimer=0;
+  SKILL_TREE.forEach(s=>{ playerStats.bonusDef=0;playerStats.bonusDmg=0;playerStats.bonusIframes=0;playerStats.atkCDMult=1;playerStats.bonusStRegen=0;playerStats.streakBonus=0; });
   updateTokenDisp();
 }
 
@@ -1431,6 +1525,8 @@ function renderShop(){
   renderWeapons();
   renderArmors();
   renderUpgrades();
+  renderSkillTree();
+  renderLoreLog();
 }
 
 function renderWeapons(){
@@ -1500,6 +1596,259 @@ const upgrades = [
   {id:'heal', label:'Restore Full Health',  desc:'A mysterious elixir restores all wounds.',            price:35,  apply:()=>{player.hp=player.maxHp;}, repeatable:true},
 ];
 let boughtUpgrades=new Set();
+
+// ═══════════════════════════════════════════════════════════
+//  SKILL TREE
+// ═══════════════════════════════════════════════════════════
+const SKILL_TREE = [
+  {
+    id:'iron_skin', icon:'🦏', name:'Iron Skin',
+    desc:'Each rank reduces all incoming damage by an additional 3.',
+    maxRank:3, costPerRank:60,
+    effect:(rank)=>{ playerStats.bonusDef=(rank*3); if(player) player.bonusDef=(rank*3); }
+  },
+  {
+    id:'swift_blade', icon:'⚡', name:'Swift Blade',
+    desc:'Reduces attack cooldown. Each rank makes you 15% faster to attack.',
+    maxRank:3, costPerRank:70,
+    effect:(rank)=>{ playerStats.atkCDMult=Math.pow(0.85,rank); if(player) player.atkCDMult=Math.pow(0.85,rank); }
+  },
+  {
+    id:'iron_will', icon:'🔥', name:'Iron Will',
+    desc:'Each rank increases stamina regeneration by 0.08 per frame.',
+    maxRank:3, costPerRank:55,
+    effect:(rank)=>{ playerStats.bonusStRegen=(rank*0.08); if(player) player.stRegen=0.22+rank*0.08; }
+  },
+  {
+    id:'bloodletter', icon:'🩸', name:'Bloodletter',
+    desc:'Each rank adds +8 flat bonus damage to every strike.',
+    maxRank:4, costPerRank:80,
+    effect:(rank)=>{ playerStats.bonusDmg=(rank*8); }
+  },
+  {
+    id:'phantom_step', icon:'👻', name:'Phantom Step',
+    desc:'Each rank increases dodge roll invincibility frames (+8 frames).',
+    maxRank:3, costPerRank:65,
+    effect:(rank)=>{ playerStats.bonusIframes=(rank*8); }
+  },
+  {
+    id:'streak_master', icon:'💀', name:'Streak Master',
+    desc:'Each rank gives +1 bonus token per kill when on a kill streak.',
+    maxRank:3, costPerRank:50,
+    effect:(rank)=>{ playerStats.streakBonus=rank; }
+  },
+];
+let skillRanks = {}; // id -> current rank
+
+function getSkillRank(id){ return skillRanks[id]||0; }
+
+function buySkill(skill){
+  const rank = getSkillRank(skill.id);
+  if(rank>=skill.maxRank) return;
+  const cost = skill.costPerRank*(rank+1);
+  if(tokens<cost){ SFX.notEnoughTokens(); showMsg('NOT ENOUGH TOKENS'); return; }
+  tokens -= cost;
+  skillRanks[skill.id] = rank+1;
+  skill.effect(rank+1);
+  SFX.upgradeGet();
+  updateTokenDisp();
+  showMsg(skill.name.toUpperCase()+' RANK '+(rank+1)+' ACQUIRED');
+  renderSkillTree();
+  document.getElementById('shop-token-disp').textContent='🪙 '+tokens+' Tokens';
+}
+
+function renderSkillTree(){
+  const grid = document.getElementById('skill-tree-grid');
+  grid.innerHTML='';
+  SKILL_TREE.forEach(skill=>{
+    const rank = getSkillRank(skill.id);
+    const maxed = rank>=skill.maxRank;
+    const cost = maxed ? 0 : skill.costPerRank*(rank+1);
+    const canAfford = tokens>=cost;
+    const div=document.createElement('div');
+    div.className='skill-node'+(maxed?' skill-maxed':(canAfford?' skill-available':''));
+    // pip row
+    let pips='<div class="skill-pip-row">';
+    for(let i=0;i<skill.maxRank;i++) pips+=`<div class="skill-pip${i<rank?' filled':''}"></div>`;
+    pips+='</div>';
+    div.innerHTML=`<div class="sk-icon">${skill.icon}</div>
+      <div class="sk-name">${skill.name}</div>
+      <div class="sk-desc">${skill.desc}</div>
+      ${pips}
+      <div class="sk-rank">Rank ${rank}/${skill.maxRank}</div>
+      <div class="sk-cost ${maxed?'maxed':''}">${maxed?'✓ MASTERED':'🪙 '+cost+(rank>0?' (next rank)':'')}</div>`;
+    if(!maxed) div.onclick=()=>buySkill(skill);
+    grid.appendChild(div);
+  });
+}
+
+// Apply all skill effects on level load (preserving across levels)
+function applySkillEffects(){
+  SKILL_TREE.forEach(skill=>{
+    const rank=getSkillRank(skill.id);
+    if(rank>0) skill.effect(rank);
+  });
+  if(player){
+    player.bonusDef = playerStats.bonusDef||0;
+    player.bonusDmg = playerStats.bonusDmg||0;
+    player.bonusIframes = playerStats.bonusIframes||0;
+    player.atkCDMult = playerStats.atkCDMult||1;
+    player.stRegen = 0.22+(playerStats.bonusStRegen||0);
+  }
+}
+
+// ═══════════════════════════════════════════════════════════
+//  LORE DROPS
+// ═══════════════════════════════════════════════════════════
+const LORE_LIBRARY = {
+  // Per enemy type — one random drop
+  grunt:[
+    { title:'HOLLOW CODEX I',    text:'They were soldiers once. Faithful men who marched into the Ashen Realm and did not return as men. Their blades remember the war. Their minds do not.' },
+    { title:'ASHEN SOLDIER\'S NOTE', text:'Scratched onto rusted iron: "If you find this, do not follow us. The ash does not end. The ash has always been."' },
+  ],
+  fast:[
+    { title:'SHADE DOCTRINE',    text:'The Wraith Shades are born when a soul refuses its own death. They move faster than grief and strike faster than regret.' },
+    { title:'ON SHADE FORM',     text:'Scholars believe the Shades are not spirits but echoes — the same moment of dying, played endlessly on repeat.' },
+  ],
+  brute:[
+    { title:'THE FORSAKEN VOWS', text:'The Brutes swore an oath to a king whose name was burned from all records. They still honor it. They do not know why.' },
+    { title:'WEIGHT OF IRON',    text:'Each Forsaken Brute carries the grief of ten men. Their armor is not protection — it is punishment.' },
+  ],
+  swamp:[
+    { title:'BOG SCRIPTURE',     text:'The Cursed Swamp was once a holy river. Something upstream changed the water. The things that drank from it changed too.' },
+  ],
+  venom:[
+    { title:'VENOM SPRITE LORE', text:'They were children of the marsh, before the corruption. Now they carry its poison in their veins and spread it like a gift.' },
+  ],
+  swamp_brute:[
+    { title:'MIRE COLOSSUS MYTH',text:'There is one Mire Colossus per swamp. It is not a creature — it is the swamp given a body so that it may defend itself.' },
+  ],
+  ice:[
+    { title:'FROST SENTINEL LOG',text:'They guard something beneath the ice. What it is, none who reached it lived to describe. The cold is not the danger. The sentinels are.' },
+  ],
+  frost:[
+    { title:'BLIZZARD SHADE RECORD',text:'When the Tundra froze, so did the souls of those who lived there. Some shattered. These did not.' },
+  ],
+  ice_giant:[
+    { title:'GLACIAL GIANT MYTH',text:'The Glacial Giants are the oldest things in the Tundra. They were here before the cold. They caused it.' },
+  ],
+  demon:[
+    { title:'EMBER DOCTRINE',    text:'The Ember Demons are not evil by nature. They are fire given consciousness. All they know is hunger and heat.' },
+  ],
+  hellknight:[
+    { title:'ORDER OF THE PYRE', text:'The Hellforged Knights were paladins who sought power in the Infernal Depths. They found it. It found them first.' },
+    { title:'HELLFORGED OATH',   text:'"We burn so that others may see. We endure so that others may not." The oath survives. Its authors are ash.' },
+  ],
+  void:[
+    { title:'VOID WRAITH CODEX', text:'The Void is not empty. The Wraiths are proof. They are made of the things that were never supposed to exist.' },
+  ],
+  lich:[
+    { title:'ANCIENT LICH RECORD',text:'The Lich did not choose undeath. It chose knowledge, and knowledge chose this form for it. That was three thousand years ago.' },
+    { title:'LICH\'S JOURNAL',   text:'Last entry: "I have forgotten what warmth feels like. I am beginning to forget that forgetting is loss."' },
+  ],
+  voidlord:[
+    { title:'THE VOID LORD PROPHECY',text:'Before the First Realm fell, a seer wrote: "At the end of all corridors, something waits that was never born and will never die. Do not look at it directly."' },
+    { title:'VOID LORD CODEX',  text:'The Void Lord is not a ruler of the void. It is a wound in reality that learned to think.' },
+  ],
+};
+
+let collectedLore = []; // array of {title,text,enemyName,isNew}
+let pendingLore = null; // lore waiting to be shown
+
+function tryDropLore(typeName, enemyName){
+  const pool = LORE_LIBRARY[typeName];
+  if(!pool) return;
+  // 40% drop chance, don't re-drop already collected
+  const uncollected = pool.filter(l=>!collectedLore.find(c=>c.title===l.title));
+  if(!uncollected.length) return;
+  if(Math.random()>0.40) return;
+  const drop = uncollected[Math.floor(Math.random()*uncollected.length)];
+  collectedLore.push({...drop, enemyName, isNew:true});
+  pendingLore = {...drop, enemyName};
+}
+
+function showLorePopup(lore){
+  document.getElementById('lore-popup-title').textContent='— '+lore.title+' —';
+  document.getElementById('lore-popup-text').textContent=lore.text;
+  document.getElementById('lore-popup').classList.add('show');
+  // Mark as read
+  const entry = collectedLore.find(c=>c.title===lore.title);
+  if(entry) entry.isNew=false;
+}
+
+function closeLorePopup(){
+  document.getElementById('lore-popup').classList.remove('show');
+  pendingLore=null;
+}
+
+function renderLoreLog(){
+  const log=document.getElementById('lore-log');
+  if(!collectedLore.length){
+    log.innerHTML='<div style="font-style:italic;color:#4a3820;font-size:.72rem;padding:10px;">No lore collected yet. Defeat enemies to discover fragments of this world\'s history.</div>';
+    return;
+  }
+  log.innerHTML='';
+  [...collectedLore].reverse().forEach(l=>{
+    const div=document.createElement('div');
+    div.className='lore-entry'+(l.isNew?' lore-entry-new':'');
+    div.innerHTML=`<div class="le-icon">📜</div>
+      <div><div class="le-title">${l.title}${l.isNew?' <span style="color:#c9a96e;font-size:.55rem;">● NEW</span>':''}</div>
+      <div class="le-preview">${l.text.substring(0,60)}...</div></div>`;
+    div.onclick=()=>showLorePopup(l);
+    log.appendChild(div);
+  });
+}
+
+// ═══════════════════════════════════════════════════════════
+//  KILL STREAK
+// ═══════════════════════════════════════════════════════════
+let killStreak=0, streakTimer=0;
+const STREAK_TIMEOUT=300; // frames before streak resets (~5s at 60fps)
+
+const STREAK_LABELS=[
+  {at:2, label:'DOUBLE KILL',  color:'#f0c040'},
+  {at:3, label:'TRIPLE KILL',  color:'#ff8844'},
+  {at:4, label:'RAMPAGE',      color:'#ff4444'},
+  {at:5, label:'UNSTOPPABLE',  color:'#cc44ff'},
+  {at:6, label:'GODLIKE',      color:'#00ffcc'},
+  {at:7, label:'LEGENDARY',    color:'#ffff44'},
+];
+
+function getStreakLabel(n){
+  let best=null;
+  for(const s of STREAK_LABELS){ if(n>=s.at) best=s; }
+  return best;
+}
+
+let streakHideTimeout=null;
+
+function onKillStreak(){
+  killStreak++;
+  streakTimer=STREAK_TIMEOUT;
+  if(killStreak<2) return;
+  const label=getStreakLabel(killStreak);
+  if(!label) return;
+  const bonusPerKill=(playerStats.streakBonus||0);
+  const el=document.getElementById('streak-disp');
+  el.innerHTML=`<div class="streak-num" style="color:${label.color};text-shadow:0 0 30px ${label.color}88">${killStreak}x</div>
+    <div class="streak-label" style="color:${label.color}">${label.label}</div>
+    ${bonusPerKill?`<div class="streak-bonus">+${bonusPerKill} BONUS TOKEN PER KILL</div>`:''}`;
+  el.classList.remove('hide');
+  el.classList.add('show');
+  if(streakHideTimeout) clearTimeout(streakHideTimeout);
+  streakHideTimeout=setTimeout(()=>{
+    el.classList.remove('show');
+    el.classList.add('hide');
+  },2200);
+}
+
+function resetStreak(){
+  killStreak=0;
+  streakTimer=0;
+  const el=document.getElementById('streak-disp');
+  el.classList.remove('show');
+  el.classList.add('hide');
+}
 
 function renderUpgrades(){
   const list=document.getElementById('upgrade-list');
