@@ -7,71 +7,47 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&display=swap');
 *{margin:0;padding:0;box-sizing:border-box;}
-body{background:#080604;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;font-family:'IM Fell English',serif;color:#c9a96e;overflow:hidden;user-select:none;}
+html,body{width:100%;height:100%;overflow:hidden;}
+body{background:#080604;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;font-family:'IM Fell English',serif;color:#c9a96e;overflow:hidden;user-select:none;-webkit-user-select:none;touch-action:none;}
 
 /* ── TITLE ── */
 #title-screen{position:fixed;inset:0;background:#080604;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:200;gap:16px;}
-#title-screen h1{font-family:'Cinzel',serif;font-size:3.4rem;color:#dfc080;text-shadow:0 0 60px #c09040cc,0 0 120px #a0602044;letter-spacing:10px;}
+#title-screen h1{font-family:'Cinzel',serif;font-size:3.4rem;color:#dfc080;text-shadow:0 0 60px #c09040cc;letter-spacing:10px;}
 #title-screen .sub{font-style:italic;color:#9a7848;font-size:1.05rem;letter-spacing:4px;}
 #title-screen .hint{font-size:.82rem;color:#7a6040;line-height:2.2;text-align:center;margin-top:6px;}
 .big-btn{margin-top:16px;padding:14px 54px;background:transparent;border:1px solid #c9a96e88;color:#dfc080;font-family:'Cinzel',serif;font-size:.95rem;letter-spacing:5px;cursor:pointer;transition:all .3s;}
 .big-btn:hover{background:#c9a96e18;border-color:#dfc080;box-shadow:0 0 28px #c9a96e44;}
-
-/* fullscreen btn on title */
 #fs-btn-title{position:fixed;top:18px;right:22px;background:transparent;border:1px solid #3a2a1466;color:#6a5030;font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:2px;padding:6px 14px;cursor:pointer;transition:all .25s;z-index:300;}
 #fs-btn-title:hover{color:#dfc080;border-color:#c9a96e66;}
 
+/* ── DEVICE POPUP ── */
+#device-popup{position:fixed;inset:0;background:#00000099;backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:300;}
+#device-popup.open{display:flex;}
+#device-panel{background:#0e0a06;border:1px solid #3a2a14;padding:40px 50px;text-align:center;box-shadow:0 0 80px #000000cc;}
+.dp-title{font-family:'Cinzel',serif;font-size:1.2rem;letter-spacing:6px;color:#c9a96e;margin-bottom:6px;}
+.dp-sub{font-style:italic;color:#6a5030;font-size:.82rem;letter-spacing:2px;margin-bottom:32px;}
+.dp-buttons{display:flex;gap:24px;}
+.dp-btn{background:#0a0806;border:1px solid #2a1f12;padding:28px 36px;cursor:pointer;transition:all .25s;min-width:160px;}
+.dp-btn:hover{border-color:#c9a96e88;background:#14100a;box-shadow:0 0 24px #c9a96e22;}
+.dp-icon{font-size:2.8rem;margin-bottom:12px;}
+.dp-label{font-family:'Cinzel',serif;font-size:.8rem;letter-spacing:3px;color:#dfc080;margin-bottom:6px;}
+.dp-hint{font-size:.65rem;color:#6a5030;font-style:italic;}
 
-/* ── TOP-RIGHT BUTTON CLUSTER (PC) ── */
-#top-right-btns{position:fixed;top:12px;right:12px;display:flex;gap:8px;z-index:15;}
-#pause-btn{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:3px;color:#5a4828;background:transparent;border:1px solid #2a1f1055;padding:6px 16px;cursor:pointer;transition:all .2s;}
-#pause-btn:hover{color:#dfc080;border-color:#c9a96e55;}
-#fullscreen-btn{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:2px;color:#5a4828;background:transparent;border:1px solid #2a1f1055;padding:6px 14px;cursor:pointer;transition:all .2s;}
-#fullscreen-btn:hover{color:#dfc080;border-color:#c9a96e55;}
-#exit-btn{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:2px;color:#7a3020;background:transparent;border:1px solid #4a1f1055;padding:6px 14px;cursor:pointer;transition:all .2s;}
-#exit-btn:hover{color:#ff8866;border-color:#8b3a2a88;}
-#sound-btn{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:2px;color:#5a4828;background:transparent;border:1px solid #2a1f1055;padding:6px 14px;cursor:pointer;transition:all .2s;}
-#sound-btn:hover{color:#dfc080;border-color:#c9a96e55;}
-
-/* ── PAUSE OVERLAY ── */
-#pause-overlay{position:fixed;inset:0;background:#00000099;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:55;opacity:0;pointer-events:none;transition:opacity .3s;}
-#pause-overlay.show{opacity:1;pointer-events:all;}
-#pause-overlay h2{font-family:'Cinzel',serif;font-size:2.5rem;letter-spacing:10px;color:#dfc080;text-shadow:0 0 40px #c9a96e88;}
-#pause-overlay .psub{font-style:italic;color:#8a6840;margin-top:10px;font-size:.85rem;letter-spacing:2px;}
-#pause-overlay .presume{margin-top:28px;font-family:'Cinzel',serif;font-size:.8rem;letter-spacing:3px;color:#a08050;cursor:pointer;border:1px solid #3a2a1466;padding:10px 32px;transition:all .2s;}
-#pause-overlay .presume:hover{color:#dfc080;border-color:#c9a96e88;background:#c9a96e0a;}
-
-/* ── EXIT CONFIRM OVERLAY ── */
-#exit-overlay{position:fixed;inset:0;background:#000000bb;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:80;opacity:0;pointer-events:none;transition:opacity .3s;}
-#exit-overlay.show{opacity:1;pointer-events:all;}
-#exit-panel{background:#0c0906;border:1px solid #3a2a14;padding:36px 52px;text-align:center;box-shadow:0 0 80px #000000cc;}
-#exit-panel .ep-title{font-family:'Cinzel',serif;font-size:1.1rem;letter-spacing:5px;color:#dfc080;margin-bottom:8px;}
-#exit-panel .ep-sub{font-style:italic;color:#6a5030;font-size:.78rem;letter-spacing:2px;margin-bottom:28px;}
-#exit-panel .ep-btns{display:flex;gap:20px;justify-content:center;}
-.ep-btn{font-family:'Cinzel',serif;font-size:.8rem;letter-spacing:4px;padding:11px 36px;cursor:pointer;background:transparent;transition:all .25s;}
-#ep-yes{border:1px solid #8b1a1a88;color:#c04030;}
-#ep-yes:hover{background:#8b1a1a22;border-color:#c04030;color:#ff8866;}
-#ep-no{border:1px solid #c9a96e44;color:#c9a96e;}
-#ep-no:hover{background:#c9a96e14;border-color:#c9a96eaa;}
-
-
-html,body{width:100%;height:100%;overflow:hidden;}
-body{background:#080604;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;font-family:'IM Fell English',serif;color:#c9a96e;overflow:hidden;user-select:none;-webkit-user-select:none;touch-action:none;}
 /* ── GAME WRAP ── */
 #game-wrap{position:fixed;top:0;left:0;width:100%;height:100%;display:none;align-items:center;justify-content:center;background:#080604;}
 #game-wrap.active{display:flex;}
 canvas{display:block;image-rendering:pixelated;border:1px solid #1a1208;box-shadow:0 0 80px #000000bb;max-width:100%;max-height:100%;}
 
-/* ── HUD — LEFT SIDE: bars only ── */
+/* ── HUD ── */
 #hud{position:fixed;top:10px;left:10px;pointer-events:none;z-index:15;display:flex;flex-direction:column;gap:5px;}
 .bar-row{display:flex;align-items:center;gap:8px;}
 .bar-label{font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:2px;width:20px;color:#e0b87a;text-shadow:0 1px 6px #000;font-weight:600;}
-.bar-bg{height:11px;background:#14100acc;border:1px solid #5a3a1888;overflow:hidden;border-radius:2px;min-width:120px;max-width:200px;width:160px;transition:width .4s ease;}
+.bar-bg{height:11px;background:#14100acc;border:1px solid #5a3a1888;overflow:hidden;border-radius:2px;min-width:120px;max-width:260px;width:160px;transition:width .4s ease;}
 .bar-fill{height:100%;transition:width .15s;}
 #hp-fill{background:linear-gradient(90deg,#6b0f0f,#c0392b,#e84040);}
 #st-fill{background:linear-gradient(90deg,#0f4a1a,#27ae60,#3ddd7a);}
 
-/* ── TOP-RIGHT BUTTON CLUSTER ── */
+/* ── TOP-RIGHT BUTTONS ── */
 #top-right-btns{position:fixed;top:10px;right:10px;display:flex;gap:6px;z-index:20;align-items:center;}
 #top-right-btns button{font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:2px;padding:7px 13px;cursor:pointer;transition:all .2s;border-radius:2px;}
 #pause-btn{color:#e0c880;background:#1a140a;border:1px solid #8a6a30aa;}
@@ -83,14 +59,14 @@ canvas{display:block;image-rendering:pixelated;border:1px solid #1a1208;box-shad
 #exit-btn{color:#e08060;background:#1a0a08;border:1px solid #8a3020aa;}
 #exit-btn:hover{color:#ffb090;background:#220e0a;border-color:#cc6040;box-shadow:0 0 10px #cc604044;}
 
-/* ── TOKEN + LEVEL: below the button cluster ── */
+/* ── TOKEN / LEVEL ── */
 #token-disp{position:fixed;top:44px;right:10px;font-family:'Cinzel',serif;font-size:.78rem;letter-spacing:2px;color:#f5d050;text-shadow:0 0 14px #f0c040bb;z-index:15;text-align:right;}
 #level-disp{position:fixed;top:64px;right:10px;font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:2px;color:#c9a060;z-index:15;text-align:right;}
 #weapon-disp{position:fixed;bottom:14px;left:14px;font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:1px;color:#c0a870;pointer-events:none;z-index:10;}
 #armor-disp{position:fixed;bottom:28px;left:14px;font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:1px;color:#80a0c0;pointer-events:none;z-index:10;}
 
 /* ── MESSAGE ── */
-#message-box{position:fixed;bottom:70px;left:50%;transform:translateX(-50%);font-family:'Cinzel',serif;font-size:1rem;letter-spacing:3px;color:#c9a96e;text-shadow:0 0 20px #c9a96e88,0 2px 6px #000;pointer-events:none;opacity:0;transition:opacity .5s;white-space:nowrap;text-align:center;z-index:30;}
+#message-box{position:fixed;bottom:70px;left:50%;transform:translateX(-50%);font-family:'Cinzel',serif;font-size:1rem;letter-spacing:3px;color:#c9a96e;text-shadow:0 0 20px #c9a96e88;pointer-events:none;opacity:0;transition:opacity .5s;white-space:nowrap;text-align:center;z-index:30;}
 
 /* ── OVERLAYS ── */
 .overlay{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none;opacity:0;transition:opacity 1.2s;z-index:50;padding:20px;box-sizing:border-box;}
@@ -105,11 +81,40 @@ canvas{display:block;image-rendering:pixelated;border:1px solid #1a1208;box-shad
 #game-clear h2{color:#f0c040;font-size:clamp(1.2rem,4vw,2.2rem);}
 #game-clear .sub2{color:#c9a06e;}
 .lc-buttons{display:flex;flex-wrap:wrap;gap:16px;margin-top:24px;justify-content:center;}
+.retry-shop{color:#c9a06e!important;border:1px solid #c9a06e33;padding:4px 14px;}
+.retry-shop:hover{background:#c9a06e18;}
+
+/* ── LEVEL INTRO ── */
+#level-intro{background:#00000088;z-index:60;position:fixed;}
+.intro-roman{font-family:'Cinzel',serif;font-size:clamp(2rem,10vw,5rem);letter-spacing:clamp(4px,3vw,12px);color:#c9a96e;text-shadow:0 0 60px #c9a96eaa;opacity:0;transform:scale(0.85);transition:all .6s ease;text-align:center;}
+.intro-name{font-family:'Cinzel',serif;font-size:clamp(.9rem,4vw,1.5rem);letter-spacing:clamp(3px,2vw,8px);color:#8a6a40;margin-top:14px;opacity:0;transition:all .6s ease .2s;text-align:center;}
+#level-intro.show .intro-roman,#level-intro.show .intro-name{opacity:1;transform:scale(1);}
+
+/* ── PAUSE ── */
+#pause-overlay{position:fixed;inset:0;background:#00000099;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:55;opacity:0;pointer-events:none;transition:opacity .3s;}
+#pause-overlay.show{opacity:1;pointer-events:all;}
+#pause-overlay h2{font-family:'Cinzel',serif;font-size:2.5rem;letter-spacing:10px;color:#dfc080;text-shadow:0 0 40px #c9a96e88;}
+#pause-overlay .psub{font-style:italic;color:#8a6840;margin-top:10px;font-size:.85rem;letter-spacing:2px;}
+#pause-overlay .presume{margin-top:28px;font-family:'Cinzel',serif;font-size:.8rem;letter-spacing:3px;color:#a08050;cursor:pointer;border:1px solid #3a2a1466;padding:10px 32px;transition:all .2s;}
+#pause-overlay .presume:hover{color:#dfc080;border-color:#c9a96e88;background:#c9a96e0a;}
+
+/* ── EXIT CONFIRM ── */
+#exit-overlay{position:fixed;inset:0;background:#000000bb;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:80;opacity:0;pointer-events:none;transition:opacity .3s;}
+#exit-overlay.show{opacity:1;pointer-events:all;}
+#exit-panel{background:#0c0906;border:1px solid #3a2a14;padding:36px 52px;text-align:center;box-shadow:0 0 80px #000000cc;}
+#exit-panel .ep-title{font-family:'Cinzel',serif;font-size:1.1rem;letter-spacing:5px;color:#dfc080;margin-bottom:8px;}
+#exit-panel .ep-sub{font-style:italic;color:#6a5030;font-size:.78rem;letter-spacing:2px;margin-bottom:28px;}
+#exit-panel .ep-btns{display:flex;gap:20px;justify-content:center;}
+.ep-btn{font-family:'Cinzel',serif;font-size:.8rem;letter-spacing:4px;padding:11px 36px;cursor:pointer;background:transparent;transition:all .25s;}
+#ep-yes{border:1px solid #8b1a1a88;color:#c04030;}
+#ep-yes:hover{background:#8b1a1a22;border-color:#c04030;color:#ff8866;}
+#ep-no{border:1px solid #c9a96e44;color:#c9a96e;}
+#ep-no:hover{background:#c9a96e14;border-color:#c9a96eaa;}
 
 /* ── SHOP ── */
 #shop-screen{position:fixed;inset:0;background:#06040200;backdrop-filter:blur(2px);display:none;align-items:center;justify-content:center;z-index:150;}
 #shop-screen.open{display:flex;}
-#shop-panel{background:#0e0a06;border:1px solid #3a2a14;box-shadow:0 0 80px #000000cc,inset 0 0 40px #0a070300;width:720px;max-height:90vh;overflow-y:auto;padding:28px 32px;}
+#shop-panel{background:#0e0a06;border:1px solid #3a2a14;box-shadow:0 0 80px #000000cc;width:720px;max-height:90vh;overflow-y:auto;padding:28px 32px;}
 #shop-panel h2{font-family:'Cinzel',serif;font-size:1.6rem;letter-spacing:6px;color:#c9a96e;text-align:center;margin-bottom:4px;}
 #shop-panel .shop-sub{text-align:center;font-style:italic;color:#6a5030;font-size:.82rem;margin-bottom:20px;letter-spacing:2px;}
 .shop-tokens{text-align:center;color:#f0c040;font-family:'Cinzel',serif;font-size:1rem;letter-spacing:3px;margin-bottom:24px;}
@@ -125,7 +130,7 @@ canvas{display:block;image-rendering:pixelated;border:1px solid #1a1208;box-shad
 .shop-item .item-desc{font-size:.65rem;color:#6a5030;line-height:1.5;margin-bottom:8px;font-style:italic;}
 .shop-item .item-price{font-family:'Cinzel',serif;font-size:.75rem;color:#f0c040;letter-spacing:1px;}
 .shop-item .item-price.free{color:#27ae60;}
-.shop-item .item-badge{position:absolute;top:6px;right:6px;font-size:.55rem;font-family:'Cinzel',serif;letter-spacing:1px;padding:2px 6px;border-radius:0;}
+.shop-item .item-badge{position:absolute;top:6px;right:6px;font-size:.55rem;font-family:'Cinzel',serif;letter-spacing:1px;padding:2px 6px;}
 .badge-owned{background:#27ae6022;color:#27ae60;border:1px solid #27ae6044;}
 .badge-eq{background:#c9a96e22;color:#c9a96e;border:1px solid #c9a96e44;}
 .shop-close{display:block;margin:20px auto 0;padding:10px 40px;}
@@ -134,45 +139,10 @@ canvas{display:block;image-rendering:pixelated;border:1px solid #1a1208;box-shad
 .shop-upgrade-row .ug-label{font-family:'Cinzel',serif;font-size:.75rem;letter-spacing:2px;color:#c9a96e;}
 .shop-upgrade-row .ug-desc{font-size:.65rem;color:#6a5030;font-style:italic;margin-top:2px;}
 .shop-upgrade-row .ug-price{font-family:'Cinzel',serif;font-size:.75rem;color:#f0c040;}
-.controls-panel{position:fixed;top:50%;right:6px;transform:translateY(-50%);font-size:.56rem;color:#6a5535;line-height:2.6;text-align:center;pointer-events:none;writing-mode:vertical-rl;text-orientation:mixed;letter-spacing:2px;padding:0 4px;z-index:10;}
-
-/* ── DEVICE POPUP ── */
-#device-popup{position:fixed;inset:0;background:#00000099;backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:300;}
-#device-popup.show{display:flex;}
-#device-panel{background:#0c0906;border:1px solid #3a2a14;padding:40px 50px;text-align:center;box-shadow:0 0 80px #000000cc;}
-.dp-title{font-family:'Cinzel',serif;font-size:1.2rem;letter-spacing:6px;color:#dfc080;margin-bottom:6px;}
-.dp-sub{font-style:italic;color:#6a5030;font-size:.78rem;letter-spacing:2px;margin-bottom:32px;}
-.dp-buttons{display:flex;gap:24px;}
-.dp-btn{background:#0a0806;border:1px solid #2a1f12;padding:28px 36px;cursor:pointer;transition:all .25s;min-width:160px;}
-.dp-btn:hover{border-color:#c9a96e88;background:#14100a;box-shadow:0 0 24px #c9a96e22;}
-.dp-icon{font-size:2.8rem;margin-bottom:12px;}
-.dp-label{font-family:'Cinzel',serif;font-size:.8rem;letter-spacing:3px;color:#dfc080;margin-bottom:6px;}
-.dp-hint{font-size:.65rem;color:#6a5030;font-style:italic;}
-
-/* ── MOBILE CONTROLS ── */
-#mobile-controls{display:none;position:fixed;inset:0;pointer-events:none;z-index:20;}
-#mobile-controls.active{display:block;}
-/* Joystick - pushed inward from corner */
-#joystick-zone{position:absolute;bottom:90px;left:70px;width:140px;height:140px;pointer-events:all;}
-#joystick-base{position:absolute;inset:0;border-radius:50%;background:#c9a96e0d;border:2px solid #c9a96e2a;box-shadow:0 0 20px #c9a96e11;}
-#joystick-knob{position:absolute;width:56px;height:56px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#dfc08077,#c9a96e44);border:2px solid #c9a96e77;top:50%;left:50%;transform:translate(-50%,-50%);box-shadow:0 0 10px #c9a96e33;}
-/* Action buttons - fixed from right/bottom */
-#action-btns{position:absolute;bottom:90px;right:50px;display:flex;flex-direction:column;gap:18px;align-items:flex-end;pointer-events:all;}
-.act-btn{width:70px;height:70px;border-radius:50%;border:2px solid;display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:1px;cursor:pointer;user-select:none;-webkit-user-select:none;transition:transform .1s;flex-direction:column;gap:2px;}
-.act-btn:active{transform:scale(.9);}
-#btn-attack{background:#8b1a1a33;border-color:#c0392b99;color:#ff9977;}
-#btn-roll{background:#1a3a8b33;border-color:#4a80cc99;color:#99bbff;}
-/* Mobile top bar */
-#mobile-topbar{position:absolute;top:0;left:0;right:0;display:flex;justify-content:center;gap:20px;padding:10px;pointer-events:all;background:#00000033;}
-.mob-top-btn{background:transparent;border:1px solid #3a2a1866;color:#8a7050;font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:2px;padding:6px 18px;cursor:pointer;-webkit-tap-highlight-color:transparent;}
-.mob-top-btn:active{color:#dfc080;border-color:#c9a96e88;background:#c9a96e11;}
-.mob-exit-btn{color:#7a3020 !important;border-color:#5a1f1055 !important;}
-.mob-exit-btn:active{color:#ff8866 !important;border-color:#8b3a2a88 !important;}
 
 /* ── SKILL TREE ── */
 #skill-tree-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-top:4px;}
 .skill-node{background:#0a0806;border:1px solid #2a1f12;padding:14px 16px;cursor:pointer;transition:all .22s;position:relative;overflow:hidden;}
-.skill-node::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent 60%,#c9a96e06);pointer-events:none;}
 .skill-node:hover:not(.skill-maxed){border-color:#c9a96e66;background:#14100a;}
 .skill-node.skill-maxed{border-color:#c9a96e44;opacity:.65;cursor:default;}
 .skill-node.skill-available{border-color:#6a8a4a88;}
@@ -186,26 +156,6 @@ canvas{display:block;image-rendering:pixelated;border:1px solid #1a1208;box-shad
 .skill-pip{width:14px;height:5px;border:1px solid #3a2a14;border-radius:1px;}
 .skill-pip.filled{background:#c9a96e;}
 
-/* ── LORE POPUP ── */
-#lore-popup{position:fixed;inset:0;background:#000000cc;display:flex;align-items:center;justify-content:center;z-index:200;opacity:0;pointer-events:none;transition:opacity .4s;}
-#lore-popup.show{opacity:1;pointer-events:all;}
-#lore-popup-inner{background:#0c0a06;border:1px solid #5a3a14;max-width:460px;width:90%;padding:32px 36px;box-shadow:0 0 80px #00000099,inset 0 0 30px #c9a96e05;position:relative;}
-#lore-popup-inner::before{content:'';position:absolute;inset:8px;border:1px solid #3a2a0e22;pointer-events:none;}
-#lore-popup-title{font-family:'Cinzel',serif;font-size:1rem;letter-spacing:4px;color:#c9a96e;margin-bottom:14px;text-align:center;text-shadow:0 0 20px #c9a96e44;}
-#lore-popup-text{font-size:.82rem;color:#9a8060;line-height:1.9;font-style:italic;text-align:center;margin-bottom:22px;}
-#lore-popup-close{font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:3px;color:#5a4020;text-align:center;cursor:pointer;transition:color .2s;}
-#lore-popup-close:hover{color:#c9a96e;}
-
-/* ── LORE LOG IN SHOP ── */
-#lore-log{display:flex;flex-direction:column;gap:8px;}
-.lore-entry{background:#0a0806;border:1px solid #2a1f12;padding:10px 14px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:12px;}
-.lore-entry:hover{border-color:#c9a96e44;background:#12100a;}
-.lore-entry .le-icon{font-size:1.2rem;flex-shrink:0;}
-.lore-entry .le-title{font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:2px;color:#dfc080;}
-.lore-entry .le-preview{font-size:.6rem;color:#6a5030;font-style:italic;margin-top:2px;}
-.lore-entry-new{border-color:#c9a96e66 !important;animation:lore-pulse 2s ease infinite;}
-@keyframes lore-pulse{0%,100%{box-shadow:0 0 0 #c9a96e00;}50%{box-shadow:0 0 10px #c9a96e33;}}
-
 /* ── KILL STREAK ── */
 #streak-disp{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);font-family:'Cinzel',serif;letter-spacing:4px;text-align:center;pointer-events:none;z-index:40;transition:transform .25s cubic-bezier(.2,1.6,.4,1),opacity .3s;opacity:0;}
 #streak-disp.show{transform:translate(-50%,-50%) scale(1);opacity:1;}
@@ -214,38 +164,47 @@ canvas{display:block;image-rendering:pixelated;border:1px solid #1a1208;box-shad
 .streak-label{font-size:clamp(.6rem,2vw,.85rem);color:#c9a96e;letter-spacing:6px;margin-top:4px;opacity:.8;}
 .streak-bonus{font-size:clamp(.5rem,1.8vw,.75rem);color:#88cc88;letter-spacing:2px;margin-top:2px;}
 
-/* ── MOBILE responsive overrides ── */
-@media (max-width:600px){
+/* ── CONTROLS PANEL ── */
+.controls-panel{position:fixed;top:50%;right:6px;transform:translateY(-50%);font-size:.56rem;color:#6a5535;line-height:2.6;text-align:center;pointer-events:none;writing-mode:vertical-rl;text-orientation:mixed;letter-spacing:2px;padding:0 4px;z-index:10;}
+
+/* ── MOBILE CONTROLS ── */
+#mobile-controls{display:none;position:fixed;inset:0;pointer-events:none;z-index:20;}
+#mobile-controls.active{display:block;}
+#joystick-zone{position:absolute;bottom:90px;left:70px;width:140px;height:140px;pointer-events:all;}
+#joystick-base{position:absolute;inset:0;border-radius:50%;background:#c9a96e0d;border:2px solid #c9a96e2a;box-shadow:0 0 20px #c9a96e11;}
+#joystick-knob{position:absolute;width:56px;height:56px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#dfc08077,#c9a96e44);border:2px solid #c9a96e77;top:50%;left:50%;transform:translate(-50%,-50%);box-shadow:0 0 10px #c9a96e33;}
+#action-btns{position:absolute;bottom:90px;right:50px;display:flex;flex-direction:column;gap:18px;align-items:flex-end;pointer-events:all;}
+.act-btn{width:70px;height:70px;border-radius:50%;border:2px solid;display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:1px;cursor:pointer;user-select:none;-webkit-user-select:none;transition:transform .1s;flex-direction:column;gap:2px;}
+.act-btn:active{transform:scale(.9);}
+#btn-attack{background:#8b1a1a33;border-color:#c0392b99;color:#ff9977;}
+#btn-roll{background:#1a3a8b33;border-color:#4a80cc99;color:#99bbff;}
+#mobile-topbar{position:absolute;top:0;left:0;right:0;display:flex;justify-content:center;gap:20px;padding:10px;pointer-events:all;background:#00000033;}
+.mob-top-btn{background:transparent;border:1px solid #3a2a1866;color:#8a7050;font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:2px;padding:6px 18px;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+.mob-top-btn:active{color:#dfc080;border-color:#c9a96e88;background:#c9a96e11;}
+.mob-exit-btn{color:#7a3020!important;border-color:#5a1f1055!important;}
+.mob-exit-btn:active{color:#ff8866!important;border-color:#8b3a2a88!important;}
+
+/* ── RESPONSIVE ── */
+@media(max-width:600px){
   #top-right-btns button{font-size:.5rem;padding:5px 8px;letter-spacing:1px;}
   #top-right-btns{gap:4px;top:8px;right:6px;}
   #token-disp{font-size:.65rem;top:38px;right:6px;}
   #level-disp{font-size:.55rem;top:56px;right:6px;}
-  #hud{padding:8px 8px;}
-  .bar-label{font-size:.52rem;width:16px;}
   .bar-bg{min-width:80px;width:120px;height:9px;}
 }
-@media (orientation:landscape) and (max-height:500px){
+@media(orientation:landscape) and (max-height:500px){
   #joystick-zone{bottom:20px;left:60px;width:120px;height:120px;}
   #action-btns{bottom:20px;right:40px;gap:12px;}
   .act-btn{width:58px;height:58px;font-size:.55rem;}
   #mobile-topbar{padding:5px;gap:10px;}
   .mob-top-btn{padding:4px 10px;font-size:.5rem;}
 }
-
-/* ── LEVEL INTRO ── */
-#level-intro{background:#00000088;z-index:60;position:fixed;}
-.intro-roman{font-family:'Cinzel',serif;font-size:clamp(2rem,10vw,5rem);letter-spacing:clamp(4px,3vw,12px);color:#c9a96e;text-shadow:0 0 60px #c9a96eaa,0 0 120px #c9a96e44;opacity:0;transform:scale(0.85);transition:all .6s ease;text-align:center;}
-.intro-name{font-family:'Cinzel',serif;font-size:clamp(.9rem,4vw,1.5rem);letter-spacing:clamp(3px,2vw,8px);color:#8a6a40;margin-top:14px;opacity:0;transition:all .6s ease .2s;text-align:center;}
-#level-intro.show .intro-roman,#level-intro.show .intro-name{opacity:1;transform:scale(1);}
-.lc-buttons{display:flex;gap:40px;margin-top:24px;}
-.retry-shop{color:#c9a06e!important;border:1px solid #c9a06e33;padding:4px 14px;}
-.retry-shop:hover{background:#c9a06e18;}
 </style>
 </head>
 <body>
 
-<!-- TITLE -->
 <button id="fs-btn-title" onclick="toggleFullscreen()">⛶ FULLSCREEN</button>
+
 <div id="title-screen">
   <h1>CAPYSOULS</h1>
   <div class="sub">— The Rodent of Despair —</div>
@@ -253,7 +212,6 @@ canvas{display:block;image-rendering:pixelated;border:1px solid #1a1208;box-shad
   <button class="big-btn" onmouseover="SFX.menuHover()" onclick="showDevicePopup()">BEGIN SUFFERING</button>
 </div>
 
-<!-- DEVICE POPUP -->
 <div id="device-popup">
   <div id="device-panel">
     <div class="dp-title">CHOOSE YOUR SUFFERING</div>
@@ -273,14 +231,12 @@ canvas{display:block;image-rendering:pixelated;border:1px solid #1a1208;box-shad
   </div>
 </div>
 
-<!-- GAME -->
 <div id="game-wrap">
-  <canvas id="canvas" width="1160" height="680"></canvas>
+  <canvas id="canvas" width="1160" height="680" onclick="emergencyUnpause()"></canvas>
   <div id="hud">
     <div class="bar-row"><div class="bar-label">HP</div><div class="bar-bg"><div class="bar-fill" id="hp-fill" style="width:100%"></div></div></div>
     <div class="bar-row"><div class="bar-label">ST</div><div class="bar-bg"><div class="bar-fill" id="st-fill" style="width:100%"></div></div></div>
   </div>
-  <!-- TOP RIGHT BUTTON CLUSTER -->
   <div id="top-right-btns">
     <button id="pause-btn" onclick="togglePause()">❚❚ PAUSE</button>
     <button id="sound-btn" onclick="toggleMute()">🔊 SFX</button>
@@ -295,7 +251,10 @@ canvas{display:block;image-rendering:pixelated;border:1px solid #1a1208;box-shad
   <div class="overlay" id="you-died">
     <h2>YOU DIED</h2>
     <div class="sub2">The capybara falls... for now.</div>
-    <div class="retry" onclick="restartLevel()">↩ TRY AGAIN</div>
+    <div class="lc-buttons" style="margin-top:22px;">
+      <div class="retry" onclick="restartLevel()">↩ TRY AGAIN</div>
+      <div class="retry retry-shop" onclick="openShopFromDeath()">🛒 VISIT SHOP</div>
+    </div>
   </div>
   <div class="overlay" id="level-clear">
     <h2 id="lc-title">REALM CLEARED</h2>
@@ -314,13 +273,11 @@ canvas{display:block;image-rendering:pixelated;border:1px solid #1a1208;box-shad
     <div class="sub2">The capybara ascends. As always.</div>
     <div class="retry" onclick="location.reload()">↩ PLAY AGAIN</div>
   </div>
-  <!-- PAUSE OVERLAY -->
   <div id="pause-overlay">
     <h2>PAUSED</h2>
     <div class="psub">— The capybara waits —</div>
     <div class="presume" onclick="togglePause()">▶ RESUME</div>
   </div>
-  <!-- EXIT CONFIRM OVERLAY -->
   <div id="exit-overlay">
     <div id="exit-panel">
       <div class="ep-title">⚔ RETURN TO MAIN MENU?</div>
@@ -332,8 +289,7 @@ canvas{display:block;image-rendering:pixelated;border:1px solid #1a1208;box-shad
     </div>
   </div>
   <div class="controls-panel" id="controls-panel">WASD · MOVE &nbsp; J/Z · ATTACK &nbsp; K/X · ROLL &nbsp; ESC · PAUSE &nbsp; P · SHOP</div>
-
-  <!-- MOBILE CONTROLS -->
+  <div id="streak-disp"></div>
   <div id="mobile-controls">
     <div id="mobile-topbar">
       <button class="mob-top-btn" onclick="togglePause()">❚❚ PAUSE</button>
@@ -353,55 +309,21 @@ canvas{display:block;image-rendering:pixelated;border:1px solid #1a1208;box-shad
   </div>
 </div>
 
-<!-- SHOP -->
 <div id="shop-screen">
   <div id="shop-panel">
     <h2>⚔ THE WANDERING MERCHANT ⚔</h2>
     <div class="shop-sub">— Tokens earned through blood may be spent here —</div>
     <div class="shop-tokens" id="shop-token-disp">🪙 0 Tokens</div>
-
-    <div class="shop-section">
-      <h3>⚔ WEAPONS</h3>
-      <div class="shop-grid" id="weapon-grid"></div>
-    </div>
-
-    <div class="shop-section">
-      <h3>🛡 ARMOR</h3>
-      <div class="shop-grid" id="armor-grid"></div>
-    </div>
-
-    <div class="shop-section">
-      <h3>💊 UPGRADES</h3>
-      <div id="upgrade-list"></div>
-    </div>
-
-    <div class="shop-section">
-      <h3>🌿 SKILL TREE</h3>
-      <div id="skill-tree-grid"></div>
-    </div>
-
-    <div class="shop-section">
-      <h3>📜 LORE COLLECTED</h3>
-      <div id="lore-log"></div>
-    </div>
-
+    <div class="shop-section"><h3>⚔ WEAPONS</h3><div class="shop-grid" id="weapon-grid"></div></div>
+    <div class="shop-section"><h3>🛡 ARMOR</h3><div class="shop-grid" id="armor-grid"></div></div>
+    <div class="shop-section"><h3>💊 UPGRADES</h3><div id="upgrade-list"></div></div>
+    <div class="shop-section"><h3>🌿 SKILL TREE</h3><div id="skill-tree-grid"></div></div>
     <button class="big-btn shop-close" onclick="closeShop()">RETURN TO BATTLE</button>
   </div>
 </div>
 
-<!-- LORE POPUP -->
-<div id="lore-popup">
-  <div id="lore-popup-inner">
-    <div id="lore-popup-title"></div>
-    <div id="lore-popup-text"></div>
-    <div id="lore-popup-close" onclick="closeLorePopup()">— CLOSE —</div>
-  </div>
-</div>
-
-<!-- KILL STREAK HUD -->
-<div id="streak-disp"></div>
-
 <script>
+
 // ═══════════════════════════════════════════════════════════
 //  SOUND ENGINE — Hard Metallic (Web Audio API)
 // ═══════════════════════════════════════════════════════════
@@ -897,32 +819,52 @@ function makeEnemy(x, y, typeName) {
 // ═══════════════════════════════════════════════════════════
 //  LEVEL INIT
 // ═══════════════════════════════════════════════════════════
+let introFrame = 0;
+const INTRO_SHOW_AT  = 5;
+const INTRO_HIDE_AT  = 148;
+const INTRO_DONE_AT  = 168;
+
 function initLevel(lvlIdx, preservePlayer) {
-  levelConfig = LEVEL_CONFIGS[lvlIdx];
-  player = makePlayer(preservePlayer ? playerStats : null);
-  enemies = levelConfig.enemies.map(e => makeEnemy(e.x, e.y, e.type));
-  particles = [];
+  // Cancel any pending intro timeouts
+  if(window._introTimeout1) clearTimeout(window._introTimeout1);
+  if(window._introTimeout2) clearTimeout(window._introTimeout2);
+  if(window._introTimeout3) clearTimeout(window._introTimeout3);
+  window._introTimeout1 = window._introTimeout2 = window._introTimeout3 = null;
+
+  try {
+    levelConfig = LEVEL_CONFIGS[lvlIdx];
+    player = makePlayer(preservePlayer ? playerStats : null);
+    enemies = levelConfig.enemies.map(e => makeEnemy(e.x, e.y, e.type));
+    particles = [];
+  } catch(err) {
+    console.error('initLevel setup error:', err);
+  }
+
+  paused = false;
   gameState = 'intro';
   resetStreak();
   hideAllOverlays();
-  updateLevelDisp();
-  updateWeaponDisp();
-  updateArmorDisp();
+  document.getElementById('pause-overlay').classList.remove('show');
+  const pb = document.getElementById('pause-btn');
+  if(pb) pb.textContent='❚❚ PAUSE';  try { updateLevelDisp(); } catch(e){}
+  try { updateWeaponDisp(); } catch(e){}
+  try { updateArmorDisp(); } catch(e){}
+  try { applySkillEffects(); } catch(e){}
+
+  // Frame-based intro: no setTimeout, driven by update() directly
+  introFrame = 0;
   showLevelIntro(lvlIdx);
-  // Apply all skill effects to fresh player
-  applySkillEffects();
 }
 
 function showLevelIntro(lvlIdx) {
   const romans = ['I','II','III','IV','V'];
-  const lc = LEVEL_CONFIGS[lvlIdx];
-  document.getElementById('intro-roman').textContent = 'REALM  ' + romans[lvlIdx];
-  document.getElementById('intro-name').textContent = lc.name;
-  const el = document.getElementById('level-intro');
-  SFX.levelIntro();
-  setTimeout(()=>{ el.classList.add('show'); }, 100);
-  setTimeout(()=>{ el.classList.remove('show'); }, 2600);
-  setTimeout(()=>{ gameState = 'playing'; }, 3200);
+  const lc = LEVEL_CONFIGS[lvlIdx] || {name:''};
+  try {
+    document.getElementById('intro-roman').textContent = 'REALM  ' + romans[lvlIdx];
+    document.getElementById('intro-name').textContent = lc.name;
+    document.getElementById('level-intro').classList.remove('show');
+  } catch(e){}
+  try { SFX.levelIntro(); } catch(e){}
 }
 
 function hideAllOverlays() {
@@ -944,8 +886,8 @@ function showOverlay(id) {
 document.addEventListener('keydown', e => {
   keys[e.key.toLowerCase()] = true;
   if (e.key === 'Escape') {
-    if(document.getElementById('lore-popup').classList.contains('show')){ closeLorePopup(); }
-    else if(gameState==='playing'||paused) togglePause();
+    if(document.getElementById('exit-overlay').classList.contains('show')){ hideExitMenu(); }
+    else if(gameState==='playing') togglePause();
   }
   if (e.key.toLowerCase() === 'p' && gameState === 'playing' && !paused) openShop();
   e.preventDefault();
@@ -1016,13 +958,6 @@ function killEnemy(e) {
   screenShake(5,12);
   showMsg('+'+e.token+(streakBonus?'+'+streakBonus+'🔥':'')+' 🪙  '+e.name+' DEFEATED');
   updateTokenDisp();
-  // Lore drop
-  tryDropLore(e.typeName, e.name);
-  if(pendingLore){
-    setTimeout(()=>{
-      if(pendingLore && gameState==='playing') showLorePopup(pendingLore);
-    }, 1200);
-  }
   if (enemies.every(en=>en.dead)) {
     gameState='cleared';
     resetStreak();
@@ -1131,9 +1066,24 @@ function clamp(obj){
 //  UPDATE
 // ═══════════════════════════════════════════════════════════
 function update(){
-  if(gameState!=='playing'||paused) return;
   frameCount++;
   if(shakeTimer>0) shakeTimer--;
+
+  // ── Intro sequence driven by frame counter — no setTimeout, no race conditions ──
+  if(gameState==='intro'){
+    introFrame++;
+    const el = document.getElementById('level-intro');
+    if(introFrame === INTRO_SHOW_AT)  { try{el.classList.add('show');}catch(e){} }
+    if(introFrame === INTRO_HIDE_AT)  { try{el.classList.remove('show');}catch(e){} }
+    if(introFrame >= INTRO_DONE_AT){      gameState = 'playing';
+      introFrame = 0;
+    }
+    return;
+  }
+
+  // Only run gameplay when playing and not paused
+  if(gameState!=='playing' || paused) return;
+
   // Streak timeout
   if(streakTimer>0){ streakTimer--; if(streakTimer<=0) resetStreak(); }
 
@@ -1413,21 +1363,26 @@ function draw(){
   ctx.clearRect(0,0,W(),H());
   ctx.save();
   if(shakeTimer>0){ctx.translate((Math.random()-.5)*shakeAmt,(Math.random()-.5)*shakeAmt);}
-  drawArena();
+  if(levelConfig) drawArena();
   drawParticles();
-  const ds=[{y:player.y+player.h,draw:()=>drawCapybara(player)}];
-  enemies.forEach(e=>{if(!e.dead)ds.push({y:e.y+e.h,draw:()=>drawEnemy(e)});});
-  ds.sort((a,b)=>a.y-b.y);ds.forEach(d=>d.draw());
-  // Invincible shimmer
-  if(player.invincible>0&&!player.isRolling&&frameCount%4<2){
-    ctx.globalAlpha=.3;ctx.strokeStyle='#88ccff';ctx.lineWidth=2;
-    ctx.beginPath();ctx.ellipse(player.x+player.w/2,player.y+player.h/2,player.w*.7,player.h*.65,0,0,Math.PI*2);ctx.stroke();ctx.globalAlpha=1;
-  }
-  if(player.stamina<20){
-    ctx.globalAlpha=.12+Math.sin(frameCount*.2)*.08;ctx.fillStyle='#ffcc00';
-    ctx.fillRect(WALL_S,WALL_T,W()-WALL_S*2,H()-WALL_T-WALL_B);ctx.globalAlpha=1;
+  if(player){
+    const ds=[{y:player.y+player.h,draw:()=>drawCapybara(player)}];
+    enemies.forEach(e=>{if(!e.dead)ds.push({y:e.y+e.h,draw:()=>drawEnemy(e)});});
+    ds.sort((a,b)=>a.y-b.y);ds.forEach(d=>d.draw());
+    if(player.invincible>0&&!player.isRolling&&frameCount%4<2){
+      ctx.globalAlpha=.3;ctx.strokeStyle='#88ccff';ctx.lineWidth=2;
+      ctx.beginPath();ctx.ellipse(player.x+player.w/2,player.y+player.h/2,player.w*.7,player.h*.65,0,0,Math.PI*2);ctx.stroke();ctx.globalAlpha=1;
+    }
+    if(player.stamina<20){
+      ctx.globalAlpha=.12+Math.sin(frameCount*.2)*.08;ctx.fillStyle='#ffcc00';
+      ctx.fillRect(WALL_S,WALL_T,W()-WALL_S*2,H()-WALL_T-WALL_B);ctx.globalAlpha=1;
+    }
   }
   ctx.restore();
+  // Debug: show game state bottom-left so we can diagnose freezes
+  ctx.font='11px monospace';
+  ctx.fillStyle='rgba(255,255,80,0.55)';
+  ctx.fillText('S:'+gameState+' P:'+paused+' F:'+introFrame, 6, H()-6);
 }
 
 function toggleFullscreen(){
@@ -1440,21 +1395,26 @@ function toggleFullscreen(){
 }
 
 function showExitMenu(){
-  // Pause the game while exit menu is shown
-  if(!paused && gameState==='playing') togglePause();
+  paused = true;
+  document.getElementById('pause-overlay').classList.remove('show');
+  const pb = document.getElementById('pause-btn');
+  if(pb) pb.textContent='▶ RESUME';
   document.getElementById('exit-overlay').classList.add('show');
 }
 
 function hideExitMenu(){
   document.getElementById('exit-overlay').classList.remove('show');
-  // Resume if we paused just for the exit menu
-  if(paused && gameState==='playing') togglePause();
+  paused = false;
+  const pb = document.getElementById('pause-btn');
+  if(pb) pb.textContent='❚❚ PAUSE';
 }
 
 function returnToMenu(){
   document.getElementById('exit-overlay').classList.remove('show');
   paused=false;
-  gameState='playing';
+  loopRunning=false;  // STOP the game loop
+  gameState='dead';   // safe non-playing state
+  player=null;
   document.getElementById('pause-overlay').classList.remove('show');
   document.getElementById('game-wrap').classList.remove('active');
   document.getElementById('mobile-controls').classList.remove('active');
@@ -1468,16 +1428,14 @@ function returnToMenu(){
   ARMORS.forEach((a,i)=>{if(i>0)a.owned=false;});
   equippedWeapon=WEAPONS[0]; equippedArmor=ARMORS[0];
   tokens=0; currentLevel=0;
-  skillRanks={};
-  collectedLore=[];
-  pendingLore=null;
-  killStreak=0; streakTimer=0;
+  skillRanks={};  killStreak=0; streakTimer=0;
   SKILL_TREE.forEach(s=>{ playerStats.bonusDef=0;playerStats.bonusDmg=0;playerStats.bonusIframes=0;playerStats.atkCDMult=1;playerStats.bonusStRegen=0;playerStats.streakBonus=0; });
   updateTokenDisp();
 }
 
 function togglePause(){
-  if(gameState!=='playing'&&!paused) return;
+  // Only pause during playing; always allow unpause regardless of state
+  if(!paused && gameState!=='playing') return;
   paused=!paused;
   const po=document.getElementById('pause-overlay');
   const pb=document.getElementById('pause-btn');
@@ -1493,31 +1451,66 @@ function togglePause(){
   }
 }
 
-function loop(){update();draw();requestAnimationFrame(loop);}
+let loopRunning = false;
+function emergencyUnpause(){
+  if(paused && gameState==='playing') togglePause();
+}
+
+function loop(){
+  if(!loopRunning) return;
+  update();
+  draw();
+  requestAnimationFrame(loop);
+}
 
 // ═══════════════════════════════════════════════════════════
 //  SHOP
 // ═══════════════════════════════════════════════════════════
 function goNextLevel(){
+  paused = false;
+  document.getElementById('pause-overlay').classList.remove('show');
+  document.getElementById('exit-overlay').classList.remove('show');
+  const pb = document.getElementById('pause-btn');
+  if(pb) pb.textContent='❚❚ PAUSE';
   hideAllOverlays();
   currentLevel++;
-  if(currentLevel<5){
-    initLevel(currentLevel,true);
+  if(currentLevel < 5){
+    initLevel(currentLevel, true);
     updateLevelDisp();
   }
+}
+
+function openShopFromDeath(){
+  SFX.shopOpen();
+  document.getElementById('shop-screen').classList.add('open');
+  document.getElementById('shop-screen').dataset.fromDeath='true';
+  renderShop();
 }
 
 function openShop(){
   if(gameState!=='playing'&&gameState!=='cleared') return;
   SFX.shopOpen();
   document.getElementById('shop-screen').classList.add('open');
+  document.getElementById('shop-screen').dataset.fromDeath='false';
   renderShop();
 }
+
 function closeShop(){
   SFX.shopClose();
+  const fromDeath = document.getElementById('shop-screen').dataset.fromDeath==='true';
   document.getElementById('shop-screen').classList.remove('open');
-  // If level is still cleared (user came from shop without advancing), just stay on clear screen
-  // goNextLevel handles advancement
+  document.getElementById('shop-screen').dataset.fromDeath='false';
+  if(fromDeath){
+    document.getElementById('you-died').classList.add('show');
+  } else {
+    // Returning to gameplay — ensure never stuck paused
+    if(gameState==='playing'){
+      paused = false;
+      document.getElementById('pause-overlay').classList.remove('show');
+      const pb=document.getElementById('pause-btn');
+      if(pb) pb.textContent='❚❚ PAUSE';
+    }
+  }
 }
 
 function renderShop(){
@@ -1525,9 +1518,7 @@ function renderShop(){
   renderWeapons();
   renderArmors();
   renderUpgrades();
-  renderSkillTree();
-  renderLoreLog();
-}
+  renderSkillTree();}
 
 function renderWeapons(){
   const grid=document.getElementById('weapon-grid');
@@ -1698,106 +1689,6 @@ function applySkillEffects(){
 }
 
 // ═══════════════════════════════════════════════════════════
-//  LORE DROPS
-// ═══════════════════════════════════════════════════════════
-const LORE_LIBRARY = {
-  // Per enemy type — one random drop
-  grunt:[
-    { title:'HOLLOW CODEX I',    text:'They were soldiers once. Faithful men who marched into the Ashen Realm and did not return as men. Their blades remember the war. Their minds do not.' },
-    { title:'ASHEN SOLDIER\'S NOTE', text:'Scratched onto rusted iron: "If you find this, do not follow us. The ash does not end. The ash has always been."' },
-  ],
-  fast:[
-    { title:'SHADE DOCTRINE',    text:'The Wraith Shades are born when a soul refuses its own death. They move faster than grief and strike faster than regret.' },
-    { title:'ON SHADE FORM',     text:'Scholars believe the Shades are not spirits but echoes — the same moment of dying, played endlessly on repeat.' },
-  ],
-  brute:[
-    { title:'THE FORSAKEN VOWS', text:'The Brutes swore an oath to a king whose name was burned from all records. They still honor it. They do not know why.' },
-    { title:'WEIGHT OF IRON',    text:'Each Forsaken Brute carries the grief of ten men. Their armor is not protection — it is punishment.' },
-  ],
-  swamp:[
-    { title:'BOG SCRIPTURE',     text:'The Cursed Swamp was once a holy river. Something upstream changed the water. The things that drank from it changed too.' },
-  ],
-  venom:[
-    { title:'VENOM SPRITE LORE', text:'They were children of the marsh, before the corruption. Now they carry its poison in their veins and spread it like a gift.' },
-  ],
-  swamp_brute:[
-    { title:'MIRE COLOSSUS MYTH',text:'There is one Mire Colossus per swamp. It is not a creature — it is the swamp given a body so that it may defend itself.' },
-  ],
-  ice:[
-    { title:'FROST SENTINEL LOG',text:'They guard something beneath the ice. What it is, none who reached it lived to describe. The cold is not the danger. The sentinels are.' },
-  ],
-  frost:[
-    { title:'BLIZZARD SHADE RECORD',text:'When the Tundra froze, so did the souls of those who lived there. Some shattered. These did not.' },
-  ],
-  ice_giant:[
-    { title:'GLACIAL GIANT MYTH',text:'The Glacial Giants are the oldest things in the Tundra. They were here before the cold. They caused it.' },
-  ],
-  demon:[
-    { title:'EMBER DOCTRINE',    text:'The Ember Demons are not evil by nature. They are fire given consciousness. All they know is hunger and heat.' },
-  ],
-  hellknight:[
-    { title:'ORDER OF THE PYRE', text:'The Hellforged Knights were paladins who sought power in the Infernal Depths. They found it. It found them first.' },
-    { title:'HELLFORGED OATH',   text:'"We burn so that others may see. We endure so that others may not." The oath survives. Its authors are ash.' },
-  ],
-  void:[
-    { title:'VOID WRAITH CODEX', text:'The Void is not empty. The Wraiths are proof. They are made of the things that were never supposed to exist.' },
-  ],
-  lich:[
-    { title:'ANCIENT LICH RECORD',text:'The Lich did not choose undeath. It chose knowledge, and knowledge chose this form for it. That was three thousand years ago.' },
-    { title:'LICH\'S JOURNAL',   text:'Last entry: "I have forgotten what warmth feels like. I am beginning to forget that forgetting is loss."' },
-  ],
-  voidlord:[
-    { title:'THE VOID LORD PROPHECY',text:'Before the First Realm fell, a seer wrote: "At the end of all corridors, something waits that was never born and will never die. Do not look at it directly."' },
-    { title:'VOID LORD CODEX',  text:'The Void Lord is not a ruler of the void. It is a wound in reality that learned to think.' },
-  ],
-};
-
-let collectedLore = []; // array of {title,text,enemyName,isNew}
-let pendingLore = null; // lore waiting to be shown
-
-function tryDropLore(typeName, enemyName){
-  const pool = LORE_LIBRARY[typeName];
-  if(!pool) return;
-  // 40% drop chance, don't re-drop already collected
-  const uncollected = pool.filter(l=>!collectedLore.find(c=>c.title===l.title));
-  if(!uncollected.length) return;
-  if(Math.random()>0.40) return;
-  const drop = uncollected[Math.floor(Math.random()*uncollected.length)];
-  collectedLore.push({...drop, enemyName, isNew:true});
-  pendingLore = {...drop, enemyName};
-}
-
-function showLorePopup(lore){
-  document.getElementById('lore-popup-title').textContent='— '+lore.title+' —';
-  document.getElementById('lore-popup-text').textContent=lore.text;
-  document.getElementById('lore-popup').classList.add('show');
-  // Mark as read
-  const entry = collectedLore.find(c=>c.title===lore.title);
-  if(entry) entry.isNew=false;
-}
-
-function closeLorePopup(){
-  document.getElementById('lore-popup').classList.remove('show');
-  pendingLore=null;
-}
-
-function renderLoreLog(){
-  const log=document.getElementById('lore-log');
-  if(!collectedLore.length){
-    log.innerHTML='<div style="font-style:italic;color:#4a3820;font-size:.72rem;padding:10px;">No lore collected yet. Defeat enemies to discover fragments of this world\'s history.</div>';
-    return;
-  }
-  log.innerHTML='';
-  [...collectedLore].reverse().forEach(l=>{
-    const div=document.createElement('div');
-    div.className='lore-entry'+(l.isNew?' lore-entry-new':'');
-    div.innerHTML=`<div class="le-icon">📜</div>
-      <div><div class="le-title">${l.title}${l.isNew?' <span style="color:#c9a96e;font-size:.55rem;">● NEW</span>':''}</div>
-      <div class="le-preview">${l.text.substring(0,60)}...</div></div>`;
-    div.onclick=()=>showLorePopup(l);
-    log.appendChild(div);
-  });
-}
 
 // ═══════════════════════════════════════════════════════════
 //  KILL STREAK
@@ -1882,9 +1773,10 @@ function renderUpgrades(){
 //  START / RESTART
 // ═══════════════════════════════════════════════════════════
 function showDevicePopup(){
-  SFX.menuClick();
-  startMenuMusic();
-  document.getElementById('device-popup').classList.add('show');
+  // Show popup FIRST before anything that could throw
+  document.getElementById('device-popup').classList.add('open');
+  try { SFX.menuClick(); } catch(e){}
+  try { startMenuMusic(); } catch(e){}
 }
 
 function resizeCanvas(){
@@ -1914,7 +1806,7 @@ function startGame(mode){
   deviceMode = mode || 'pc';
   SFX.menuClick();
   stopMenuMusic();
-  document.getElementById('device-popup').classList.remove('show');
+  document.getElementById('device-popup').classList.remove('open');
   document.getElementById('title-screen').style.display='none';
   document.getElementById('fs-btn-title').style.display='none';
 
@@ -1930,26 +1822,34 @@ function startGame(mode){
     initMobileControls();
     const el=document.documentElement;
     if(el.requestFullscreen) el.requestFullscreen();
-    // Re-layout on orientation change
-    window.addEventListener('resize', ()=>{
-      if(deviceMode==='mobile'){ resizeCanvas(); }
-    });
+    window.addEventListener('resize', ()=>{ if(deviceMode==='mobile') resizeCanvas(); });
   }
 
-  currentLevel=0;tokens=0;
+  currentLevel=0; tokens=0;
   playerStats={maxHp:100,maxStamina:100,speed:3.2};
   WEAPONS.forEach((w,i)=>{if(i>0)w.owned=false;});
   ARMORS.forEach((a,i)=>{if(i>0)a.owned=false;});
-  equippedWeapon=WEAPONS[0];equippedArmor=ARMORS[0];
+  equippedWeapon=WEAPONS[0]; equippedArmor=ARMORS[0];
   boughtUpgrades=new Set();
-  initLevel(0,false);
-  updateTokenDisp();updateWeaponDisp();updateArmorDisp();
-  loop();
+  skillRanks={};
+  killStreak=0; streakTimer=0;
+
+  initLevel(0, false);
+  updateTokenDisp(); updateWeaponDisp(); updateArmorDisp();
+
+  if(!loopRunning){
+    loopRunning = true;
+    loop();
+  }
 }
 
 function restartLevel(){
-  player.hp=player.maxHp;player.stamina=player.maxStamina;
-  initLevel(currentLevel,true);
+  paused = false;
+  document.getElementById('pause-overlay').classList.remove('show');
+  document.getElementById('exit-overlay').classList.remove('show');
+  const pb = document.getElementById('pause-btn');
+  if(pb) pb.textContent='❚❚ PAUSE';
+  initLevel(currentLevel, true);
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -2012,6 +1912,7 @@ function initMobileControls(){
   const rollBtn=document.getElementById('btn-roll');
   rollBtn.addEventListener('touchstart',e=>{e.preventDefault();playerRoll();},{passive:false});
 }
+
 </script>
 </body>
 </html>
